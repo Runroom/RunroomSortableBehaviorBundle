@@ -1,0 +1,35 @@
+services:
+    _defaults:
+        public: false
+
+    Runroom\SortableBehaviorBundle\Controller\SortableAdminController:
+        public: true
+        arguments:
+            - '@translator'
+            - '@property_accessor'
+            - '@sortable_behavior.position'
+
+    Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension:
+        arguments:
+            - '@sortable_behavior.position'
+        tags:
+            - { name: twig.extension }
+
+    sortable_behavior.position.orm:
+        class: Runroom\SortableBehaviorBundle\Services\ORMPositionHandler
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [setPositionField, ['%sortable.behavior.position.field%']]
+            - [setSortableGroups, ['%sortable.behavior.sortable_groups%']]
+
+    sortable_behavior.position.gedmo.listener:
+        class: Gedmo\Sortable\SortableListener
+        calls:
+            - [setAnnotationReader, ['@annotation_reader']]
+
+    sortable_behavior.position.gedmo:
+        class: Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@sortable_behavior.position.gedmo.listener'

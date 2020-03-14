@@ -1,0 +1,52 @@
+{
+    "name": "runroom/sortable-behavior-bundle",
+    "type": "symfony-bundle",
+    "description": "Provides a way to sort your admin listing",
+    "keywords": [
+        "sortable",
+        "admin",
+        "sonata"
+    ],
+    "homepage": "https://github.com/runroom/SortableBehaviorBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Runroom",
+            "email": "runroom@runroom.com",
+            "homepage": "https://www.runroom.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "doctrine/common": "^2.12",
+        "symfony/config": "^4.4 || ^5.0",
+        "symfony/dependency-injection": "^4.4 || ^5.0",
+        "symfony/http-foundation": "^4.4 || ^5.0",
+        "symfony/http-kernel": "^4.4 || ^5.0",
+        "symfony/property-access": "^4.4 || ^5.0",
+        "symfony/translation": "^4.4 || ^5.0",
+        "twig/twig": "^2.12 || ^3.0"
+    },
+    "require-dev": {
+        "doctrine/orm": "^2.7",
+        "gedmo/doctrine-extensions": "^2.4",
+        "sonata-project/admin-bundle": "^3.61"
+    },
+    "suggest": {
+        "sonata-project/admin-bundle": "Can be easily integrated with Sonata Admin bundle",
+        "stof/doctrine-extensions-bundle": "Manage doctrine extensions with Symfony"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Runroom\\SortableBehaviorBundle\\": "src/"
+        }
+    }
+}
