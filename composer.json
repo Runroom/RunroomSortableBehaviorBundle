@@ -1,5 +1,5 @@
 {
-    "name": "runroom/sortable-behavior-bundle",
+    "name": "runroom-packages/sortable-behavior-bundle",
     "type": "symfony-bundle",
     "description": "Provides a way to sort your admin listing",
     "keywords": [
