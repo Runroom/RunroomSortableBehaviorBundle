@@ -2,11 +2,7 @@
     "name": "runroom-packages/sortable-behavior-bundle",
     "type": "symfony-bundle",
     "description": "Provides a way to sort your admin listing",
-    "keywords": [
-        "sortable",
-        "admin",
-        "sonata"
-    ],
+    "keywords": ["sortable", "admin", "sonata"],
     "homepage": "https://github.com/runroom/RunroomSortableBehaviorBundle",
     "license": "MIT",
     "authors": [
