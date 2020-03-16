@@ -7,12 +7,12 @@
         "admin",
         "sonata"
     ],
-    "homepage": "https://github.com/runroom/SortableBehaviorBundle",
+    "homepage": "https://github.com/runroom/RunroomSortableBehaviorBundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Runroom",
-            "email": "runroom@runroom.com",
+            "email": "software@runroom.com",
             "homepage": "https://www.runroom.com"
         }
     ],
@@ -41,7 +41,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.x-dev"
+            "dev-master": "0.x-dev"
         }
     },
     "autoload": {
