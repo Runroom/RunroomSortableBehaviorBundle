@@ -30,7 +30,9 @@
     "require-dev": {
         "doctrine/orm": "^2.7",
         "gedmo/doctrine-extensions": "^2.4",
-        "sonata-project/admin-bundle": "^3.61"
+        "phpunit/phpunit": "^8.5",
+        "sonata-project/admin-bundle": "^3.61",
+        "symfony/phpunit-bridge": "^5.0"
     },
     "suggest": {
         "sonata-project/admin-bundle": "Can be easily integrated with Sonata Admin bundle",
@@ -47,6 +49,11 @@
     "autoload": {
         "psr-4": {
             "Runroom\\SortableBehaviorBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Runroom\\SortableBehaviorBundle\\Tests\\": "tests/"
         }
     }
 }
