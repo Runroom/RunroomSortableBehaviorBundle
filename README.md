@@ -30,14 +30,6 @@ return [
 ];
 ```
 
-### Update doctrine schema
-
-Finally, execute doctrine schema update to create the new tables:
-
-```
-console doctrine:schema:update --force
-```
-
 ## License
 
 This bundle is under the [MIT license](LICENSE).
