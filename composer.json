@@ -21,16 +21,19 @@
         "doctrine/common": "^2.12",
         "symfony/config": "^4.4 || ^5.0",
         "symfony/dependency-injection": "^4.4 || ^5.0",
-        "symfony/http-foundation": "^4.4 || ^5.0",
+        "symfony/http-foundation": "^4.4.7 || ^5.0.7",
         "symfony/http-kernel": "^4.4 || ^5.0",
         "symfony/property-access": "^4.4 || ^5.0",
         "symfony/translation": "^4.4 || ^5.0",
         "twig/twig": "^2.12 || ^3.0"
     },
+    "conflict": {
+        "phpunit/phpunit": "9.1.2"
+    },
     "require-dev": {
         "doctrine/orm": "^2.7",
         "gedmo/doctrine-extensions": "^2.4",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.1",
         "sonata-project/admin-bundle": "^3.61",
         "symfony/phpunit-bridge": "^5.0"
     },
