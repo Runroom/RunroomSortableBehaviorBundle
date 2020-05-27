@@ -17,7 +17,7 @@ use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-abstract class AbstractPositionHandler
+abstract class AbstractPositionHandler implements PositionHandlerInterface
 {
     protected $positionField;
     private $sortableGroups;
