@@ -19,9 +19,11 @@ use Gedmo\Sortable\SortableListener;
 
 final class GedmoPositionHandler extends AbstractPositionHandler
 {
-    protected $maxPositions;
-    protected $entityManager;
-    protected $listener;
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var SortableListener */
+    private $listener;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -31,7 +33,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         $this->listener = $listener;
     }
 
-    public function getLastPosition($entity): int
+    public function getLastPosition(object $entity): int
     {
         $meta = $this->entityManager->getClassMetadata(\get_class($entity));
         $config = $this->listener->getConfiguration($this->entityManager, $meta->name);
@@ -44,10 +46,6 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         }
 
         $hash = $this->getHash($groups, $config);
-
-        if (isset($this->maxPositions[$hash])) {
-            return $this->maxPositions[$hash];
-        }
 
         return $this->getMaxPosition($config, $meta, $groups);
     }

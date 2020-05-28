@@ -19,11 +19,16 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 abstract class AbstractPositionHandler implements PositionHandlerInterface
 {
-    protected $positionField;
+    /** @var array */
+    private $positionField;
+
+    /** @var array */
     private $sortableGroups;
+
+    /** @var PropertyAccessor */
     private $accessor;
 
-    abstract public function getLastPosition($entity): int;
+    abstract public function getLastPosition(object $entity): int;
 
     public function setPositionField(array $positionField): void
     {
@@ -63,14 +68,14 @@ abstract class AbstractPositionHandler implements PositionHandlerInterface
         return $groups;
     }
 
-    public function getCurrentPosition($entity): int
+    public function getCurrentPosition(object $entity): int
     {
         return $this->getAccessor()->getValue($entity, $this->getPositionFieldByEntity($entity));
     }
 
-    public function getPosition($object, string $movePosition, int $lastPosition): int
+    public function getPosition(object $entity, string $movePosition, int $lastPosition): int
     {
-        $currentPosition = $this->getCurrentPosition($object);
+        $currentPosition = $this->getCurrentPosition($entity);
         $newPosition = 0;
 
         switch ($movePosition) {
@@ -109,7 +114,7 @@ abstract class AbstractPositionHandler implements PositionHandlerInterface
 
     private function getAccessor(): PropertyAccessor
     {
-        if (!$this->accessor) {
+        if (null === $this->accessor) {
             $this->accessor = PropertyAccess::createPropertyAccessor();
         }
 

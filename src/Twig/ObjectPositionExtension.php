@@ -21,6 +21,7 @@ final class ObjectPositionExtension extends AbstractExtension
 {
     public const NAME = 'sortableObjectPosition';
 
+    /** @var AbstractPositionHandler */
     private $positionHandler;
 
     public function __construct(AbstractPositionHandler $positionHandler)
@@ -41,11 +42,13 @@ final class ObjectPositionExtension extends AbstractExtension
         ];
     }
 
+    /** @param object|string $entity */
     public function currentPosition($entity): int
     {
         return $this->positionHandler->getCurrentPosition($entity);
     }
 
+    /** @param object|string $entity */
     public function lastPosition($entity): int
     {
         return $this->positionHandler->getLastPosition($entity);

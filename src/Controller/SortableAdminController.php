@@ -22,8 +22,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class SortableAdminController extends CRUDController
 {
+    /** @var TranslatorInterface */
     private $translator;
+
+    /** @var PropertyAccessor */
     private $accessor;
+
+    /** @var AbstractPositionHandler */
     private $positionHandler;
 
     public function __construct(

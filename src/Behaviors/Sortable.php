@@ -19,10 +19,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 trait Sortable
 {
     /**
+     * @var int
+     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
-    protected $position;
+    private $position;
 
     public function setPosition(?int $position): self
     {

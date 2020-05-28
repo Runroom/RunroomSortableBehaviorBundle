@@ -18,7 +18,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class ORMPositionHandler extends AbstractPositionHandler
 {
-    protected $entityManager;
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var array */
     private static $cacheLastPosition = [];
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -26,7 +29,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
         $this->entityManager = $entityManager;
     }
 
-    public function getLastPosition($entity): int
+    public function getLastPosition(object $entity): int
     {
         $entityClass = ClassUtils::getClass($entity);
         $parentEntityClass = true;
@@ -75,7 +78,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
         return self::$cacheLastPosition[$cacheKey];
     }
 
-    private function getCacheKeyForLastPosition($entity, array $groups): string
+    private function getCacheKeyForLastPosition(object $entity, array $groups): string
     {
         $cacheKey = ClassUtils::getClass($entity);
 

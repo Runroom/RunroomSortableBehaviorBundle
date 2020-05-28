@@ -18,12 +18,12 @@ use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
 
 class SortableTest extends TestCase
 {
-    protected const POSITION = 42;
+    private const POSITION = 42;
 
     /**
      * @test
      */
-    public function itSetsAndGetsPosition()
+    public function itSetsAndGetsPosition(): void
     {
         $sortable = new SortableEntity();
 
