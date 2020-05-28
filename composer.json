@@ -18,7 +18,9 @@
     ],
     "require": {
         "php": "^7.3",
-        "doctrine/common": "^2.12",
+        "doctrine/common": "^2.12 || ^3.0",
+        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/orm": "^2.7",
         "symfony/config": "^4.4 || ^5.0",
         "symfony/dependency-injection": "^4.4 || ^5.0",
         "symfony/http-foundation": "^4.4.7 || ^5.0.7",
@@ -28,7 +30,6 @@
         "twig/twig": "^2.12 || ^3.0"
     },
     "require-dev": {
-        "doctrine/orm": "^2.7",
         "gedmo/doctrine-extensions": "^2.4",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "phpunit/phpunit": "^9.1.3",
