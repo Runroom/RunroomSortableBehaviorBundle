@@ -42,14 +42,12 @@ final class ObjectPositionExtension extends AbstractExtension
         ];
     }
 
-    /** @param object|string $entity */
-    public function currentPosition($entity): int
+    public function currentPosition(object $entity): int
     {
         return $this->positionHandler->getCurrentPosition($entity);
     }
 
-    /** @param object|string $entity */
-    public function lastPosition($entity): int
+    public function lastPosition(object $entity): int
     {
         return $this->positionHandler->getLastPosition($entity);
     }

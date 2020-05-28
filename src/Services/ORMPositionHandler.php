@@ -37,7 +37,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
         while ($parentEntityClass) {
             $parentEntityClass = ClassUtils::getParentClass($entityClass);
 
-            if ($parentEntityClass) {
+            if (class_exists($parentEntityClass)) {
                 $reflection = new \ReflectionClass($parentEntityClass);
 
                 if ($reflection->isAbstract()) {
