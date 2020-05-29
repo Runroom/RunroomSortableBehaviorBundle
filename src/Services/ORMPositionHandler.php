@@ -48,7 +48,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
         while ($parentEntityClass) {
             $parentEntityClass = ClassUtils::getParentClass($entityClass);
 
-            if (class_exists($parentEntityClass)) {
+            if (false !== $parentEntityClass && class_exists($parentEntityClass)) {
                 $reflection = new \ReflectionClass($parentEntityClass);
 
                 if ($reflection->isAbstract()) {
@@ -72,18 +72,22 @@ final class ORMPositionHandler extends AbstractPositionHandler
 
                 foreach ($groups as $groupName) {
                     $getter = 'get' . $groupName;
+                    $value = $entity->$getter();
 
-                    if ($entity->$getter()) {
+                    if ($value) {
                         $queryBuilder
                             ->andWhere(sprintf('t.%s = :group_%s', $groupName, $index))
-                            ->setParameter(sprintf('group_%s', $index), $entity->$getter())
-                        ;
+                            ->setParameter(sprintf('group_%s', $index), $value);
+
                         ++$index;
                     }
                 }
             }
 
-            self::$cacheLastPosition[$cacheKey] = (int) $queryBuilder->getQuery()->getSingleScalarResult();
+            $query = $queryBuilder->getQuery();
+            $query->useResultCache(false);
+
+            self::$cacheLastPosition[$cacheKey] = (int) $query->getSingleScalarResult();
         }
 
         return self::$cacheLastPosition[$cacheKey];
@@ -119,10 +123,9 @@ final class ORMPositionHandler extends AbstractPositionHandler
 
         foreach ($groups as $groupName) {
             $getter = 'get' . $groupName;
+            $value = $entity->$getter();
 
-            if ($entity->$getter()) {
-                $cacheKey .= '_' . $entity->$getter()->getId();
-            }
+            $cacheKey .= '_' . (\is_object($value) ? $value->getId() : $value);
         }
 
         return $cacheKey;

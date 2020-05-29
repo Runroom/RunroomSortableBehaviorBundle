@@ -13,9 +13,68 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\Fixtures;
 
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Runroom\SortableBehaviorBundle\Behaviors\Sortable;
 
+/**
+ * @ORM\Entity
+ */
 class SortableEntity
 {
     use Sortable;
+
+    /**
+     * @var int
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @Gedmo\SortableGroup
+     * @ORM\Column(type="integer")
+     */
+    private $group;
+
+    /**
+     * @var SortableGroup
+     *
+     * @Gedmo\SortableGroup
+     * @ORM\Column(type="integer")
+     */
+    private $sortableGroup;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setGroup(?int $group): self
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    public function getGroup(): ?int
+    {
+        return $this->group;
+    }
+
+    public function setSortableGroup(?SortableGroup $sortableGroup): self
+    {
+        $this->sortableGroup = $sortableGroup;
+
+        return $this;
+    }
+
+    public function getSortableGroup(): ?SortableGroup
+    {
+        return $this->sortableGroup;
+    }
 }

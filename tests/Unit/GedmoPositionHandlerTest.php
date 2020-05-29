@@ -17,7 +17,6 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
-use Gedmo\Sortable\Mapping\Event\Adapter\ORM as ORMSortableAdapter;
 use Gedmo\Sortable\SortableListener;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -35,9 +34,6 @@ class GedmoPositionHandlerTest extends TestCase
 
     /** @var ObjectProphecy<SortableListener> */
     private $listener;
-
-    /** @var ORMSortableAdapter */
-    private $adapter;
 
     /** @var GedmoPositionHandler */
     private $positionHandler;
