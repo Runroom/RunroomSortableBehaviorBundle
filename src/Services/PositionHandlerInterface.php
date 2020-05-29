@@ -17,15 +17,8 @@ interface PositionHandlerInterface
 {
     public function getLastPosition(object $entity): int;
 
-    public function setPositionField(array $positionField): void;
-
-    public function setSortableGroups(array $sortableGroups): void;
-
     /** @param object|string $entity */
     public function getPositionFieldByEntity($entity): string;
-
-    /** @param object|string $entity */
-    public function getSortableGroupsFieldByEntity($entity): array;
 
     public function getCurrentPosition(object $entity): int;
 

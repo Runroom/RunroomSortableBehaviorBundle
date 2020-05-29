@@ -13,64 +13,25 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Services;
 
-use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 abstract class AbstractPositionHandler implements PositionHandlerInterface
 {
-    /** @var array */
-    private $positionField;
-
-    /** @var array */
-    private $sortableGroups;
-
     /** @var PropertyAccessor */
     private $accessor;
 
     abstract public function getLastPosition(object $entity): int;
 
-    public function setPositionField(array $positionField): void
-    {
-        $this->positionField = $positionField;
-    }
-
-    public function setSortableGroups(array $sortableGroups): void
-    {
-        $this->sortableGroups = $sortableGroups;
-    }
-
-    public function getPositionFieldByEntity($entity): string
-    {
-        if (\is_object($entity)) {
-            $entity = ClassUtils::getClass($entity);
-        }
-
-        if (isset($this->positionField['entities'][$entity])) {
-            return $this->positionField['entities'][$entity];
-        }
-
-        return $this->positionField['default'];
-    }
-
-    public function getSortableGroupsFieldByEntity($entity): array
-    {
-        if (\is_object($entity)) {
-            $entity = ClassUtils::getClass($entity);
-        }
-
-        $groups = [];
-
-        if (isset($this->sortableGroups['entities'][$entity])) {
-            $groups = $this->sortableGroups['entities'][$entity];
-        }
-
-        return $groups;
-    }
+    abstract public function getPositionFieldByEntity($entity): string;
 
     public function getCurrentPosition(object $entity): int
     {
-        return $this->getAccessor()->getValue($entity, $this->getPositionFieldByEntity($entity));
+        if (null === $this->accessor) {
+            $this->accessor = PropertyAccess::createPropertyAccessor();
+        }
+
+        return $this->accessor->getValue($entity, $this->getPositionFieldByEntity($entity));
     }
 
     public function getPosition(object $entity, string $movePosition, int $lastPosition): int
@@ -80,27 +41,19 @@ abstract class AbstractPositionHandler implements PositionHandlerInterface
 
         switch ($movePosition) {
             case 'up':
-                if ($currentPosition > 0) {
-                    $newPosition = $currentPosition - 1;
-                }
+                $newPosition = $currentPosition - 1;
                 break;
 
             case 'down':
-                if ($currentPosition < $lastPosition) {
-                    $newPosition = $currentPosition + 1;
-                }
+                $newPosition = $currentPosition + 1;
                 break;
 
             case 'top':
-                if ($currentPosition > 0) {
-                    $newPosition = 0;
-                }
+                $newPosition = 0;
                 break;
 
             case 'bottom':
-                if ($currentPosition < $lastPosition) {
-                    $newPosition = $lastPosition;
-                }
+                $newPosition = $lastPosition;
                 break;
 
             default:
@@ -109,15 +62,6 @@ abstract class AbstractPositionHandler implements PositionHandlerInterface
                 }
         }
 
-        return $newPosition;
-    }
-
-    private function getAccessor(): PropertyAccessor
-    {
-        if (null === $this->accessor) {
-            $this->accessor = PropertyAccess::createPropertyAccessor();
-        }
-
-        return $this->accessor;
+        return max(0, min($newPosition, $lastPosition));
     }
 }

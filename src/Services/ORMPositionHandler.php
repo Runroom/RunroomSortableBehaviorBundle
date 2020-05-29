@@ -22,11 +22,22 @@ final class ORMPositionHandler extends AbstractPositionHandler
     private $entityManager;
 
     /** @var array */
+    private $positionField;
+
+    /** @var array */
+    private $sortableGroups;
+
+    /** @var array */
     private static $cacheLastPosition = [];
 
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        array $positionField,
+        array $sortableGroups
+    ) {
         $this->entityManager = $entityManager;
+        $this->positionField = $positionField;
+        $this->sortableGroups = $sortableGroups;
     }
 
     public function getLastPosition(object $entity): int
@@ -76,6 +87,30 @@ final class ORMPositionHandler extends AbstractPositionHandler
         }
 
         return self::$cacheLastPosition[$cacheKey];
+    }
+
+    public function getPositionFieldByEntity($entity): string
+    {
+        if (\is_object($entity)) {
+            $entity = ClassUtils::getClass($entity);
+        }
+
+        if (isset($this->positionField['entities'][$entity])) {
+            return $this->positionField['entities'][$entity];
+        }
+
+        return $this->positionField['default'];
+    }
+
+    private function getSortableGroupsFieldByEntity(string $entity): array
+    {
+        $groups = [];
+
+        if (isset($this->sortableGroups['entities'][$entity])) {
+            $groups = $this->sortableGroups['entities'][$entity];
+        }
+
+        return $groups;
     }
 
     private function getCacheKeyForLastPosition(object $entity, array $groups): string

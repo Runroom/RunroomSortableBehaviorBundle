@@ -12,9 +12,8 @@ services:
     Runroom\SortableBehaviorBundle\Services\ORMPositionHandler:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
-        calls:
-            - [setPositionField, ['%sortable.behavior.position.field%']]
-            - [setSortableGroups, ['%sortable.behavior.sortable_groups%']]
+            $positionField: '%sortable.behavior.position.field%'
+            $sortableGroups: '%sortable.behavior.sortable_groups%'
 
     Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler:
         arguments:

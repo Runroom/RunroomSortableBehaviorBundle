@@ -27,7 +27,7 @@ final class RunroomSortableBehaviorExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         $container->setParameter('sortable.behavior.position.field', $config['position_field']);
         $container->setParameter('sortable.behavior.sortable_groups', $config['sortable_groups']);
