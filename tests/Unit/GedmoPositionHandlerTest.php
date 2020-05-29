@@ -53,9 +53,7 @@ class GedmoPositionHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function itGetsLastPosition(): void
     {
         $entity = new SortableEntity();
@@ -92,9 +90,7 @@ class GedmoPositionHandlerTest extends TestCase
         $this->assertSame(2, $lastPosition);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function itGetsPositionFieldByEntity(): void
     {
         $meta = $this->prophesize(ClassMetadata::class);
