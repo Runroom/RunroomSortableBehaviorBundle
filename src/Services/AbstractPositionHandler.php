@@ -13,25 +13,32 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Services;
 
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 abstract class AbstractPositionHandler implements PositionHandlerInterface
 {
     /** @var PropertyAccessor */
-    private $accessor;
+    private $propertyAccessor;
 
     abstract public function getLastPosition(object $entity): int;
 
     abstract public function getPositionFieldByEntity($entity): string;
 
+    public function setPropertyAccessor(PropertyAccessor $propertyAccessor): self
+    {
+        $this->propertyAccessor = $propertyAccessor;
+
+        return $this;
+    }
+
+    public function getPropertyAccessor(): PropertyAccessor
+    {
+        return $this->propertyAccessor;
+    }
+
     public function getCurrentPosition(object $entity): int
     {
-        if (null === $this->accessor) {
-            $this->accessor = PropertyAccess::createPropertyAccessor();
-        }
-
-        return $this->accessor->getValue($entity, $this->getPositionFieldByEntity($entity));
+        return $this->getPropertyAccessor()->getValue($entity, $this->getPositionFieldByEntity($entity));
     }
 
     public function getPosition(object $entity, string $movePosition, int $lastPosition): int

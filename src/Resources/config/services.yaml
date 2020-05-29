@@ -14,6 +14,7 @@ services:
             $entityManager: '@doctrine.orm.entity_manager'
             $positionField: '%sortable.behavior.position.field%'
             $sortableGroups: '%sortable.behavior.sortable_groups%'
+        calls: [[setPropertyAccessor, ['@property_accessor']]]
 
     Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler:
         arguments:
@@ -21,10 +22,9 @@ services:
             $listener: !service
                 class: Gedmo\Sortable\SortableListener
                 calls: [[setAnnotationReader, ['@annotation_reader']]]
+        calls: [[setPropertyAccessor, ['@property_accessor']]]
 
     Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension:
         arguments:
             $positionHandler: '@sortable_behavior.position'
-        tags:
-            - { name: twig.extension }
-
+        tags: [twig.extension]

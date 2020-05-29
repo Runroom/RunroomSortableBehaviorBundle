@@ -13,30 +13,24 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Controller;
 
-use Runroom\SortableBehaviorBundle\Services\AbstractPositionHandler;
+use Runroom\SortableBehaviorBundle\Services\PositionHandlerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class SortableAdminController extends CRUDController
 {
-    /** @var TranslatorInterface */
-    private $translator;
-
     /** @var PropertyAccessor */
     private $accessor;
 
-    /** @var AbstractPositionHandler */
+    /** @var PositionHandlerInterface */
     private $positionHandler;
 
     public function __construct(
-        TranslatorInterface $translator,
         PropertyAccessor $accessor,
-        AbstractPositionHandler $positionHandler
+        PositionHandlerInterface $positionHandler
     ) {
-        $this->translator = $translator;
         $this->accessor = $accessor;
         $this->positionHandler = $positionHandler;
     }
@@ -46,7 +40,7 @@ class SortableAdminController extends CRUDController
         if (!$this->admin->isGranted('EDIT')) {
             $this->addFlash(
                 'sonata_flash_error',
-                $this->translator->trans('flash_error_no_rights_update_position')
+                $this->trans('flash_error_no_rights_update_position')
             );
 
             return new RedirectResponse($this->admin->generateUrl(
@@ -73,7 +67,7 @@ class SortableAdminController extends CRUDController
 
         $this->addFlash(
             'sonata_flash_success',
-            $this->translator->trans('flash_success_position_updated')
+            $this->trans('flash_success_position_updated')
         );
 
         return new RedirectResponse($this->admin->generateUrl(
