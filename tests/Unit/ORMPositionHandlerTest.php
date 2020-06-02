@@ -21,6 +21,7 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Services\ORMPositionHandler;
+use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableGroup;
 
@@ -40,7 +41,7 @@ class ORMPositionHandlerTest extends TestCase
 
         $this->positionHandler = new ORMPositionHandler(
             $this->entityManager->reveal(),
-            ['entities' => [SortableEntity::class => 'position'], 'default' => 'position'],
+            ['entities' => [SortableEntity::class => 'position'], 'default' => 'place'],
             ['entities' => [SortableEntity::class => ['group', 'sortableGroup']]]
         );
     }
@@ -48,7 +49,7 @@ class ORMPositionHandlerTest extends TestCase
     /** @test */
     public function itGetsLastPosition(): void
     {
-        $entity = new SortableEntity();
+        $entity = new ChildSortableEntity();
         $queryBuilder = $this->prophesize(QueryBuilder::class);
         $query = $this->prophesize(AbstractQuery::class);
 
@@ -67,5 +68,13 @@ class ORMPositionHandlerTest extends TestCase
         $lastPosition = $this->positionHandler->getLastPosition($entity);
 
         $this->assertSame(2, $lastPosition);
+    }
+
+    /** @test */
+    public function itGetsPositionFieldByEntity(): void
+    {
+        $field = $this->positionHandler->getPositionFieldByEntity(new \stdClass());
+
+        $this->assertSame('place', $field);
     }
 }

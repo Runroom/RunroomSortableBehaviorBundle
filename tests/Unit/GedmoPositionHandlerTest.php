@@ -23,6 +23,7 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler;
+use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
 
 class GedmoPositionHandlerTest extends TestCase
@@ -52,7 +53,7 @@ class GedmoPositionHandlerTest extends TestCase
     /** @test */
     public function itGetsLastPosition(): void
     {
-        $entity = new SortableEntity();
+        $entity = new ChildSortableEntity();
         $meta = $this->prophesize(ClassMetadata::class);
         $queryBuilder = $this->prophesize(QueryBuilder::class);
         $query = $this->prophesize(AbstractQuery::class);
@@ -73,7 +74,7 @@ class GedmoPositionHandlerTest extends TestCase
         $queryBuilder->getQuery()->willReturn($query->reveal());
         $query->useResultCache(false)->shouldBeCalled();
         $query->getSingleScalarResult()->willReturn(2);
-        $this->entityManager->getClassMetadata(SortableEntity::class)->willReturn($meta->reveal());
+        $this->entityManager->getClassMetadata(ChildSortableEntity::class)->willReturn($meta->reveal());
         $this->entityManager->createQueryBuilder()->willReturn($queryBuilder->reveal());
         $this->listener->getConfiguration($this->entityManager->reveal(), 'SortableEntity')->willReturn([
             'useObjectClass' => SortableEntity::class,

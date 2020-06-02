@@ -19,7 +19,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Controller\SortableAdminController;
 use Runroom\SortableBehaviorBundle\Services\PositionHandlerInterface;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool;
@@ -77,7 +77,7 @@ class SortableAdminControllerTest extends TestCase
     /** @test */
     public function itSetsAndGetsPosition(): void
     {
-        $entity = new SortableEntity();
+        $entity = new ChildSortableEntity();
 
         $translator = $this->prophesize(TranslatorInterface::class);
         $session = $this->prophesize(Session::class);

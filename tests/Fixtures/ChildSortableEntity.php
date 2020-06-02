@@ -13,22 +13,6 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\Fixtures;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/** @ORM\Entity */
-class SortableGroup
+class ChildSortableEntity extends SortableEntity
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 }
