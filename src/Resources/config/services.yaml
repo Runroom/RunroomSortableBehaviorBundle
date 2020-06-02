@@ -9,14 +9,14 @@ services:
             $accessor: '@property_accessor'
             $positionHandler: '@sortable_behavior.position'
 
-    Runroom\SortableBehaviorBundle\Services\ORMPositionHandler:
+    Runroom\SortableBehaviorBundle\Service\ORMPositionHandler:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
             $positionField: '%sortable.behavior.position.field%'
             $sortableGroups: '%sortable.behavior.sortable_groups%'
         calls: [[setPropertyAccessor, ['@property_accessor']]]
 
-    Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler:
+    Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
             $listener: !service

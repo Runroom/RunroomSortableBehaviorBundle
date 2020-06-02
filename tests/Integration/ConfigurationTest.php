@@ -16,7 +16,7 @@ namespace Runroom\SortableBehaviorBundle\Tests\Integration;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
 use Runroom\SortableBehaviorBundle\DependencyInjection\Configuration;
 use Runroom\SortableBehaviorBundle\DependencyInjection\RunroomSortableBehaviorExtension;
-use Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler;
+use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;

@@ -18,13 +18,14 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Controller\SortableAdminController;
-use Runroom\SortableBehaviorBundle\Services\PositionHandlerInterface;
+use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Templating\TemplateRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -75,7 +76,29 @@ class SortableAdminControllerTest extends TestCase
     }
 
     /** @test */
-    public function itSetsAndGetsPosition(): void
+    public function itRedirectsWhenMissingPermissions(): void
+    {
+        $translator = $this->prophesize(TranslatorInterface::class);
+        $session = $this->prophesize(Session::class);
+        $flashBag = $this->prophesize(FlashBagInterface::class);
+
+        $this->admin->isGranted('EDIT')->willReturn(false);
+        $this->admin->generateUrl('list', ['filter' => []])->willReturn('https://localhost');
+        $this->admin->getFilterParameters()->willReturn([]);
+        $this->admin->getTranslationDomain()->willReturn('domain');
+        $this->container->get('translator')->willReturn($translator->reveal());
+        $this->container->has('session')->willReturn(true);
+        $this->container->get('session')->willReturn($session->reveal());
+        $translator->trans(Argument::any(), [], 'domain', null)->willReturn('trans');
+        $session->getFlashBag()->willReturn($flashBag);
+
+        $response = $this->controller->moveAction('up');
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+    }
+
+    /** @test */
+    public function ItMovesPositions(): void
     {
         $entity = new ChildSortableEntity();
 
@@ -101,6 +124,25 @@ class SortableAdminControllerTest extends TestCase
         $response = $this->controller->moveAction('up');
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
+    }
+
+    /** @test */
+    public function ItMovesPositionsWithAjax(): void
+    {
+        $entity = new ChildSortableEntity();
+
+        $this->request->headers->set('X-Requested-With', 'XMLHttpRequest');
+        $this->admin->isGranted('EDIT')->willReturn(true);
+        $this->admin->getSubject()->willReturn($entity);
+        $this->admin->update($entity)->shouldBeCalled();
+        $this->admin->getNormalizedIdentifier($entity)->willReturn('identifier');
+        $this->positionHandler->getLastPosition($entity)->willReturn(2);
+        $this->positionHandler->getPosition($entity, 'up', 2)->willReturn(1);
+        $this->positionHandler->getPositionFieldByEntity($entity)->willReturn('position');
+
+        $response = $this->controller->moveAction('up');
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
     }
 
     private function configureCRUDController(): void

@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\DependencyInjection;
 
-use Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler;
-use Runroom\SortableBehaviorBundle\Services\PositionHandlerInterface;
+use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
+use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

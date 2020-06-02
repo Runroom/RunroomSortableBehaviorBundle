@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Controller;
 
-use Runroom\SortableBehaviorBundle\Services\PositionHandlerInterface;
+use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;

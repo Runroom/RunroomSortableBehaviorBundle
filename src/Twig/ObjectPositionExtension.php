@@ -13,25 +13,18 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Twig;
 
-use Runroom\SortableBehaviorBundle\Services\AbstractPositionHandler;
+use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 final class ObjectPositionExtension extends AbstractExtension
 {
-    public const NAME = 'sortableObjectPosition';
-
-    /** @var AbstractPositionHandler */
+    /** @var PositionHandlerInterface */
     private $positionHandler;
 
-    public function __construct(AbstractPositionHandler $positionHandler)
+    public function __construct(PositionHandlerInterface $positionHandler)
     {
         $this->positionHandler = $positionHandler;
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
     }
 
     public function getFunctions(): array

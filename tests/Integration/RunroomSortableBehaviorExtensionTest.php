@@ -16,8 +16,8 @@ namespace Runroom\SortableBehaviorBundle\Tests\Integration;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Runroom\SortableBehaviorBundle\Controller\SortableAdminController;
 use Runroom\SortableBehaviorBundle\DependencyInjection\RunroomSortableBehaviorExtension;
-use Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler;
-use Runroom\SortableBehaviorBundle\Services\ORMPositionHandler;
+use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
+use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 
 class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase

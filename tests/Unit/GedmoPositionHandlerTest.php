@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
-use Runroom\SortableBehaviorBundle\Services\GedmoPositionHandler;
+use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
 
