@@ -5,7 +5,6 @@ services:
     Runroom\SortableBehaviorBundle\Controller\SortableAdminController:
         public: true
         arguments:
-            $translator: '@translator'
             $accessor: '@property_accessor'
             $positionHandler: '@sortable_behavior.position'
 
