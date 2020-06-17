@@ -1,0 +1,7 @@
+runroom_sortable_behavior:
+    position_field:
+        entities:
+            Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity: customPositionField
+    sortable_groups:
+        entities:
+            Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity: [sortableGroup]

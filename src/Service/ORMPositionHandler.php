@@ -21,15 +21,24 @@ final class ORMPositionHandler extends AbstractPositionHandler
     /** @var EntityManagerInterface */
     private $entityManager;
 
-    /** @var array */
+    /** @var array{ entities: array<class-string, string>, default: string } */
     private $positionField;
 
-    /** @var array */
+    /** @var array{ entities: array<class-string, string[]> } */
     private $sortableGroups;
 
-    /** @var array */
+    /** @var array<string, int> */
     private static $cacheLastPosition = [];
 
+    /**
+     * @param array{
+     *     entities: array<class-string, string>,
+     *     default: string
+     * } $positionField
+     * @param array{
+     *     entities: array<class-string, string[]>
+     * } $sortableGroups
+     * */
     public function __construct(
         EntityManagerInterface $entityManager,
         array $positionField,
@@ -106,6 +115,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
         return $this->positionField['default'];
     }
 
+    /** @return string[] */
     private function getSortableGroupsFieldByEntity(string $entity): array
     {
         $groups = [];
@@ -117,6 +127,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
         return $groups;
     }
 
+    /** @param string[] $groups */
     private function getCacheKeyForLastPosition(object $entity, array $groups): string
     {
         $cacheKey = ClassUtils::getClass($entity);
@@ -125,7 +136,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
             $getter = 'get' . $groupName;
             $value = $entity->$getter();
 
-            $cacheKey .= '_' . (\is_object($value) ? $value->getId() : $value);
+            $cacheKey .= '_' . ((\is_object($value) && method_exists($value, 'getId')) ? $value->getId() : $value);
         }
 
         return $cacheKey;

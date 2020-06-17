@@ -25,7 +25,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
     /** @var SortableListener */
     private $listener;
 
-    /** @var array */
+    /** @var array<string, int> */
     private $cacheLastPosition = [];
 
     public function __construct(
@@ -40,6 +40,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
     {
         /** @var ClassMetadata */
         $meta = $this->entityManager->getClassMetadata(\get_class($entity));
+        /** @var array{ useObjectClass: string, position: string, groups?: class-string[] } */
         $config = $this->listener->getConfiguration($this->entityManager, $meta->getName());
 
         $groups = [];
@@ -70,6 +71,14 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         return $config['position'];
     }
 
+    /**
+     * @param array{
+     *     useObjectClass: string,
+     *     position: string,
+     *     groups?: class-string[]
+     * } $config
+     * @param array<string, mixed> $groups
+     */
     private function getHash(array $config, array $groups): string
     {
         $data = $config['useObjectClass'];
@@ -85,6 +94,14 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         return md5($data);
     }
 
+    /**
+     * @param array{
+     *     useObjectClass: string,
+     *     position: string,
+     *     groups?: class-string[]
+     * } $config
+     * @param array<string, mixed> $groups
+     */
     private function queryLastPosition(array $config, array $groups): int
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();

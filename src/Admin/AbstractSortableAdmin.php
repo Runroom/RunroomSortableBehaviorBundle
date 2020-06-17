@@ -18,6 +18,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 abstract class AbstractSortableAdmin extends AbstractAdmin
 {
+    /** @var array{ _page: int, _sort_order: 'ASC'|'DESC', _sort_by: string } */
     protected $datagridValues = [
         '_page' => 1,
         '_sort_order' => 'ASC',

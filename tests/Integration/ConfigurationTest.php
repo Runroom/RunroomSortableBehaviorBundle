@@ -17,6 +17,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurati
 use Runroom\SortableBehaviorBundle\DependencyInjection\Configuration;
 use Runroom\SortableBehaviorBundle\DependencyInjection\RunroomSortableBehaviorExtension;
 use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
+use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
@@ -30,9 +31,13 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
             'position_handler' => GedmoPositionHandler::class,
             'position_field' => [
                 'default' => 'position',
-                'entities' => [],
+                'entities' => [
+                    SortableEntity::class => 'customPositionField',
+                ],
             ],
-            'sortable_groups' => ['entities' => []],
+            'sortable_groups' => ['entities' => [
+                SortableEntity::class => ['sortableGroup'],
+            ]],
         ], [
             __DIR__ . '/../Fixtures/configuration.yaml',
         ]);
