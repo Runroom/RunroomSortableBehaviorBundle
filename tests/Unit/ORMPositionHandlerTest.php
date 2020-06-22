@@ -67,7 +67,7 @@ class ORMPositionHandlerTest extends TestCase
 
         $lastPosition = $this->positionHandler->getLastPosition($entity);
 
-        $this->assertSame(2, $lastPosition);
+        self::assertSame(2, $lastPosition);
     }
 
     /** @test */
@@ -75,6 +75,6 @@ class ORMPositionHandlerTest extends TestCase
     {
         $field = $this->positionHandler->getPositionFieldByEntity(new \stdClass());
 
-        $this->assertSame('place', $field);
+        self::assertSame('place', $field);
     }
 }

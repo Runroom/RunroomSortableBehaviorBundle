@@ -94,7 +94,7 @@ class SortableAdminControllerTest extends TestCase
 
         $response = $this->controller->moveAction('up');
 
-        $this->assertInstanceOf(RedirectResponse::class, $response);
+        self::assertInstanceOf(RedirectResponse::class, $response);
     }
 
     /** @test */
@@ -123,7 +123,7 @@ class SortableAdminControllerTest extends TestCase
 
         $response = $this->controller->moveAction('up');
 
-        $this->assertInstanceOf(RedirectResponse::class, $response);
+        self::assertInstanceOf(RedirectResponse::class, $response);
     }
 
     /** @test */
@@ -142,7 +142,7 @@ class SortableAdminControllerTest extends TestCase
 
         $response = $this->controller->moveAction('up');
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
+        self::assertInstanceOf(JsonResponse::class, $response);
     }
 
     private function configureCRUDController(): void

@@ -30,7 +30,7 @@ final class Configuration implements ConfigurationInterface
                 ->cannotBeEmpty()
                 ->defaultValue(GedmoPositionHandler::class)
                 ->validate()
-                    ->ifTrue(function ($config) {
+                    ->ifTrue(function ($config): bool {
                         return !is_a($config, PositionHandlerInterface::class, true);
                     })
                     ->thenInvalid('%s must implement ' . PositionHandlerInterface::class)
@@ -43,7 +43,7 @@ final class Configuration implements ConfigurationInterface
                         ->defaultValue('position')
                     ->end()
                     ->arrayNode('entities')
-                        ->prototype('scalar')->end()
+                        ->scalarPrototype()->end()
                     ->end()
                 ->end()
             ->end()
@@ -52,7 +52,7 @@ final class Configuration implements ConfigurationInterface
                 ->children()
                     ->arrayNode('entities')
                         ->useAttributeAsKey('name')
-                        ->prototype('variable')
+                        ->variablePrototype()
                         ->end()
                     ->end()
                 ->end()

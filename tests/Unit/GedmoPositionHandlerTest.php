@@ -84,7 +84,7 @@ class GedmoPositionHandlerTest extends TestCase
 
         $lastPosition = $this->positionHandler->getLastPosition($entity);
 
-        $this->assertSame(2, $lastPosition);
+        self::assertSame(2, $lastPosition);
     }
 
     /** @test */
@@ -101,6 +101,6 @@ class GedmoPositionHandlerTest extends TestCase
 
         $positionField = $this->positionHandler->getPositionFieldByEntity(new SortableEntity());
 
-        $this->assertSame('position', $positionField);
+        self::assertSame('position', $positionField);
     }
 }
