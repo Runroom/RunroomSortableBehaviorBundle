@@ -81,7 +81,12 @@ final class ORMPositionHandler extends AbstractPositionHandler
                 $index = 1;
 
                 foreach ($groups as $groupName) {
-                    $value = \call_user_func([$entity, 'get' . $groupName]);
+                    $value = null;
+                    $callback = [$entity, 'get' . $groupName];
+
+                    if (\is_callable($callback)) {
+                        $value = \call_user_func($callback);
+                    }
 
                     if (null !== $value) {
                         $queryBuilder
@@ -133,7 +138,12 @@ final class ORMPositionHandler extends AbstractPositionHandler
         $cacheKey = ClassUtils::getClass($entity);
 
         foreach ($groups as $groupName) {
-            $value = \call_user_func([$entity, 'get' . $groupName]);
+            $value = '';
+            $callback = [$entity, 'get' . $groupName];
+
+            if (\is_callable($callback)) {
+                $value = \call_user_func($callback);
+            }
 
             $cacheKey .= '_' . ((\is_object($value) && method_exists($value, 'getId')) ? $value->getId() : $value);
         }
