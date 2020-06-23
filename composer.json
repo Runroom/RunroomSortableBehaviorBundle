@@ -62,5 +62,7 @@
         "psr-4": {
             "Runroom\\SortableBehaviorBundle\\Tests\\": "tests/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
