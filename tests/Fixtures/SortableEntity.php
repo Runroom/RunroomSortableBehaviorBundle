@@ -23,7 +23,7 @@ class SortableEntity extends AbstractSortableEntity
     use Sortable;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -32,7 +32,7 @@ class SortableEntity extends AbstractSortableEntity
     private $id;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @Gedmo\SortableGroup
      * @ORM\Column(type="integer")
@@ -40,7 +40,7 @@ class SortableEntity extends AbstractSortableEntity
     private $group;
 
     /**
-     * @var SortableGroup
+     * @var SortableGroup|null
      *
      * @Gedmo\SortableGroup
      * @ORM\Column(type="integer")

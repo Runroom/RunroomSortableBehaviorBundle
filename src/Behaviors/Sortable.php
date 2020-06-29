@@ -19,7 +19,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 trait Sortable
 {
     /**
-     * @var int
+     * @var int|null
      *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")

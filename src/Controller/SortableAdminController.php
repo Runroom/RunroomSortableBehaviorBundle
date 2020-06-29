@@ -51,24 +51,26 @@ class SortableAdminController extends CRUDController
 
         $object = $this->admin->getSubject();
 
-        $lastPositionNumber = $this->positionHandler->getLastPosition($object);
-        $newPositionNumber = $this->positionHandler->getPosition($object, $position, $lastPositionNumber);
+        if (null !== $object) {
+            $lastPositionNumber = $this->positionHandler->getLastPosition($object);
+            $newPositionNumber = $this->positionHandler->getPosition($object, $position, $lastPositionNumber);
 
-        $this->accessor->setValue($object, $this->positionHandler->getPositionFieldByEntity($object), $newPositionNumber);
+            $this->accessor->setValue($object, $this->positionHandler->getPositionFieldByEntity($object), $newPositionNumber);
 
-        $this->admin->update($object);
+            $this->admin->update($object);
 
-        if ($this->isXmlHttpRequest()) {
-            return $this->renderJson([
-                'result' => 'ok',
-                'objectId' => $this->admin->getNormalizedIdentifier($object),
-            ]);
+            if ($this->isXmlHttpRequest()) {
+                return $this->renderJson([
+                    'result' => 'ok',
+                    'objectId' => $this->admin->getNormalizedIdentifier($object),
+                ]);
+            }
+
+            $this->addFlash(
+                'sonata_flash_success',
+                $this->trans('flash_success_position_updated')
+            );
         }
-
-        $this->addFlash(
-            'sonata_flash_success',
-            $this->trans('flash_success_position_updated')
-        );
 
         return new RedirectResponse($this->admin->generateUrl(
             'list',
