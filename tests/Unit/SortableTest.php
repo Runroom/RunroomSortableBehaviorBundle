@@ -18,7 +18,7 @@ use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
 
 class SortableTest extends TestCase
 {
-    private const POSITION = 42;
+    public const POSITION = 42;
 
     /** @test */
     public function itSetsAndGetsPosition(): void
