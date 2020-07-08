@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 
 class ObjectPositionExtensionTest extends TestCase

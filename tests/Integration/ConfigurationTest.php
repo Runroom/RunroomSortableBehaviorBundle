@@ -17,7 +17,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurati
 use Runroom\SortableBehaviorBundle\DependencyInjection\Configuration;
 use Runroom\SortableBehaviorBundle\DependencyInjection\RunroomSortableBehaviorExtension;
 use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;

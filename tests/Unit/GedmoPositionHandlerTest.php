@@ -23,8 +23,8 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 
 class GedmoPositionHandlerTest extends TestCase
 {

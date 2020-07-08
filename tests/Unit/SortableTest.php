@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 
 class SortableTest extends TestCase
 {

@@ -19,7 +19,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Controller\SortableAdminController;
 use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool;

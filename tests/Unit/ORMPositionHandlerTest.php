@@ -21,9 +21,9 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\ChildSortableEntity;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableEntity;
-use Runroom\SortableBehaviorBundle\Tests\Fixtures\SortableGroup;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableGroup;
 
 class ORMPositionHandlerTest extends TestCase
 {

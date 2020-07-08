@@ -18,7 +18,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 abstract class AbstractSortableAdmin extends AbstractAdmin
 {
-    /** @param array{ _page: int, _sort_order: 'ASC'|'DESC', _sort_by: string } $sortValues */
+    /** @param array{ _page?: int, _sort_order?: 'ASC'|'DESC', _sort_by?: string } $sortValues */
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues['_sort_by'] = 'position';

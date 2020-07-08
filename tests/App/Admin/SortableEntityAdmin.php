@@ -11,8 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Runroom\SortableBehaviorBundle\Tests\Fixtures;
+namespace Runroom\SortableBehaviorBundle\Tests\App\Admin;
 
-class ChildSortableEntity extends SortableEntity
+use Runroom\SortableBehaviorBundle\Admin\AbstractSortableAdmin;
+
+final class SortableEntityAdmin extends AbstractSortableAdmin
 {
 }
