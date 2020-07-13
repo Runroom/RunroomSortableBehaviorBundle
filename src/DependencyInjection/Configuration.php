@@ -30,7 +30,7 @@ final class Configuration implements ConfigurationInterface
                 ->cannotBeEmpty()
                 ->defaultValue(GedmoPositionHandler::class)
                 ->validate()
-                    ->ifTrue(function ($config): bool {
+                    ->ifTrue(function (string $config): bool {
                         return !is_a($config, PositionHandlerInterface::class, true);
                     })
                     ->thenInvalid('%s must implement ' . PositionHandlerInterface::class)
