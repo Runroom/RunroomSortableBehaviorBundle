@@ -29,7 +29,7 @@
 
     <php>
         <ini name="precision" value="8"/>
-        <server name="SHELL_VERBOSITY" value="-1" />
+        <server name="SHELL_VERBOSITY" value="-1"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0"/>
         <env name="KERNEL_CLASS" value="Runroom\SortableBehaviorBundle\Tests\App\Kernel"/>
     </php>
