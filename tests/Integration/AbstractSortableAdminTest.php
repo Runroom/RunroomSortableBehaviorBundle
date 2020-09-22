@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace Runroom\SortableBehaviorBundle\Tests\Integration;
 
 use Runroom\SortableBehaviorBundle\Tests\App\Admin\SortableEntityAdmin;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Runroom\Testing\TestCase\SonataAdminTestCase;
 
+/** @extends SonataAdminTestCase<SortableEntity> */
 class AbstractSortableAdminTest extends SonataAdminTestCase
 {
     /** @test */

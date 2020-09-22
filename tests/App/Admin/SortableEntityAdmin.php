@@ -14,7 +14,9 @@ declare(strict_types=1);
 namespace Runroom\SortableBehaviorBundle\Tests\App\Admin;
 
 use Runroom\SortableBehaviorBundle\Admin\AbstractSortableAdmin;
+use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 
+/** @extends AbstractSortableAdmin<SortableEntity> */
 final class SortableEntityAdmin extends AbstractSortableAdmin
 {
 }

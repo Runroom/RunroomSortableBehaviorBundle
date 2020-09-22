@@ -16,6 +16,11 @@ namespace Runroom\SortableBehaviorBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Route\RouteCollection;
 
+/**
+ * @template T of object
+ *
+ * @template-extends AbstractAdmin<T>
+ */
 abstract class AbstractSortableAdmin extends AbstractAdmin
 {
     /** @param mixed[] $sortValues */
