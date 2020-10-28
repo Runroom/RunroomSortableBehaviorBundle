@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3 || ^8.0",
         "doctrine/common": "^2.12 || ^3.0",
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/orm": "^2.7",
@@ -30,7 +30,7 @@
         "twig/twig": "^2.12 || ^3.0"
     },
     "require-dev": {
-        "gedmo/doctrine-extensions": "^2.4",
+        "gedmo/doctrine-extensions": "^2.4 || ^3.0",
         "matthiasnoback/symfony-config-test": "^4.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "phpspec/prophecy": "^1.11.1",
