@@ -13,23 +13,15 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Service\AbstractPositionHandler;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class AbstractPositionHandlerTest extends TestCase
 {
-    use ProphecyTrait;
-
     /** @var SortableEntity */
     private $entity;
-
-    /** @var ObjectProphecy<EntityManagerInterface> */
-    private $entityManager;
 
     /** @var TestPositionHandler */
     private $positionHandler;

@@ -13,18 +13,15 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 
 class ObjectPositionExtensionTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /** @var ObjectProphecy<PositionHandlerInterface> */
+    /** @var MockObject&PositionHandlerInterface */
     private $positionHandler;
 
     /** @var ObjectPositionExtension */
@@ -32,9 +29,9 @@ class ObjectPositionExtensionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->positionHandler = $this->prophesize(PositionHandlerInterface::class);
+        $this->positionHandler = $this->createMock(PositionHandlerInterface::class);
 
-        $this->extension = new ObjectPositionExtension($this->positionHandler->reveal());
+        $this->extension = new ObjectPositionExtension($this->positionHandler);
     }
 
     /** @test */
@@ -42,7 +39,7 @@ class ObjectPositionExtensionTest extends TestCase
     {
         $entity = new ChildSortableEntity();
 
-        $this->positionHandler->getCurrentPosition($entity)->willReturn(3);
+        $this->positionHandler->method('getCurrentPosition')->with($entity)->willReturn(3);
 
         $result = $this->extension->currentPosition($entity);
 
@@ -54,7 +51,7 @@ class ObjectPositionExtensionTest extends TestCase
     {
         $entity = new ChildSortableEntity();
 
-        $this->positionHandler->getLastPosition($entity)->willReturn(10);
+        $this->positionHandler->method('getLastPosition')->with($entity)->willReturn(10);
 
         $result = $this->extension->lastPosition($entity);
 

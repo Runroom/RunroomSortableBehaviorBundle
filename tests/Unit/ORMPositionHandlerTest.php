@@ -16,10 +16,8 @@ namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
@@ -27,9 +25,7 @@ use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableGroup;
 
 class ORMPositionHandlerTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /** @var ObjectProphecy<EntityManagerInterface> */
+    /** @var Stub&EntityManagerInterface */
     private $entityManager;
 
     /** @var ORMPositionHandler */
@@ -37,10 +33,10 @@ class ORMPositionHandlerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->entityManager = $this->prophesize(EntityManagerInterface::class);
+        $this->entityManager = $this->createStub(EntityManagerInterface::class);
 
         $this->positionHandler = new ORMPositionHandler(
-            $this->entityManager->reveal(),
+            $this->entityManager,
             ['entities' => [SortableEntity::class => 'position'], 'default' => 'place'],
             ['entities' => [SortableEntity::class => ['group', 'sortableGroup']]]
         );
@@ -50,20 +46,20 @@ class ORMPositionHandlerTest extends TestCase
     public function itGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
-        $queryBuilder = $this->prophesize(QueryBuilder::class);
-        $query = $this->prophesize(AbstractQuery::class);
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $query = $this->createMock(AbstractQuery::class);
 
         $entity->setGroup(2);
         $entity->setSortableGroup(new SortableGroup());
 
-        $queryBuilder->select('MAX(t.position) as last_position')->willReturn($queryBuilder->reveal());
-        $queryBuilder->from(SortableEntity::class, 't')->willReturn($queryBuilder->reveal());
-        $queryBuilder->andWhere(Argument::any())->willReturn($queryBuilder->reveal());
-        $queryBuilder->setParameter(Argument::any(), Argument::any())->willReturn($queryBuilder->reveal());
-        $queryBuilder->getQuery()->willReturn($query->reveal());
-        $query->useResultCache(false)->shouldBeCalled();
-        $query->getSingleScalarResult()->willReturn(2);
-        $this->entityManager->createQueryBuilder()->willReturn($queryBuilder->reveal());
+        $queryBuilder->method('select')->with('MAX(t.position) as last_position')->willReturn($queryBuilder);
+        $queryBuilder->method('from')->with(SortableEntity::class, 't')->willReturn($queryBuilder);
+        $queryBuilder->method('andWhere')->willReturn($queryBuilder);
+        $queryBuilder->method('setParameter')->willReturn($queryBuilder);
+        $queryBuilder->method('getQuery')->willReturn($query);
+        $query->expects(self::once())->method('useResultCache')->with(false);
+        $query->method('getSingleScalarResult')->willReturn(2);
+        $this->entityManager->method('createQueryBuilder')->willReturn($queryBuilder);
 
         $lastPosition = $this->positionHandler->getLastPosition($entity);
 

@@ -33,8 +33,6 @@
         "gedmo/doctrine-extensions": "^2.4 || ^3.0",
         "matthiasnoback/symfony-config-test": "^4.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
-        "phpspec/prophecy": "^1.11.1",
-        "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.3",
         "runroom-packages/testing": "^0.10",
         "sonata-project/admin-bundle": "^3.68",
