@@ -86,7 +86,7 @@ class SortableAdminControllerTest extends TestCase
     }
 
     /** @test */
-    public function ItMovesPositions(): void
+    public function itMovesPositions(): void
     {
         $entity = new ChildSortableEntity();
 
@@ -106,7 +106,7 @@ class SortableAdminControllerTest extends TestCase
     }
 
     /** @test */
-    public function ItMovesPositionsWithAjax(): void
+    public function itMovesPositionsWithAjax(): void
     {
         $entity = new ChildSortableEntity();
 
