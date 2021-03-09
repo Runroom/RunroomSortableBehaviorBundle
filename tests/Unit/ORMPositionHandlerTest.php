@@ -57,7 +57,7 @@ class ORMPositionHandlerTest extends TestCase
         $queryBuilder->method('andWhere')->willReturn($queryBuilder);
         $queryBuilder->method('setParameter')->willReturn($queryBuilder);
         $queryBuilder->method('getQuery')->willReturn($query);
-        $query->expects(self::once())->method('useResultCache')->with(false);
+        $query->expects(self::once())->method('disableResultCache');
         $query->method('getSingleScalarResult')->willReturn(2);
         $this->entityManager->method('createQueryBuilder')->willReturn($queryBuilder);
 

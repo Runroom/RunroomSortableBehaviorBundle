@@ -120,7 +120,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         }
 
         $query = $queryBuilder->getQuery();
-        $query->useResultCache(false);
+        $query->disableResultCache();
 
         return (int) $query->getSingleScalarResult();
     }
