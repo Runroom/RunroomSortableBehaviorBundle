@@ -36,7 +36,7 @@ return [
 
 ```yaml
 // config/packages/twig.yaml
-
+...
     paths:
         '%kernel.project_dir%/vendor/runroom-packages/sortable-behavior-bundle/src/Resources/views': SortableBehavior
 ```
