@@ -41,6 +41,15 @@ return [
         '%kernel.project_dir%/vendor/runroom-packages/sortable-behavior-bundle/src/Resources/views': SortableBehavior
 ```
 
+### Configure Sonata Admin
+```yaml
+// config/packages/sonata_admin.yaml
+...
+    assets:
+        extra_javascripts:
+            - bundles/runroomsortablebehavior/js/init.js
+```
+
 ## License
 
 This bundle is under the [MIT license](LICENSE).
