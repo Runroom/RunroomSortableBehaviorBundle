@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Runroom\SortableBehaviorBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 /**
  * @template T of object
@@ -29,7 +29,7 @@ abstract class AbstractSortableAdmin extends AbstractAdmin
         $sortValues['_sort_by'] = 'position';
     }
 
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('move', $this->getRouterIdParameter() . '/move/{position}');
     }
