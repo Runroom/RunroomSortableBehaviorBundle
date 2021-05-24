@@ -17,7 +17,7 @@ use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /** @extends CRUDController<object> */
 class SortableAdminController extends CRUDController
@@ -29,7 +29,7 @@ class SortableAdminController extends CRUDController
     private $positionHandler;
 
     public function __construct(
-        PropertyAccessor $accessor,
+        PropertyAccessorInterface $accessor,
         PositionHandlerInterface $positionHandler
     ) {
         $this->accessor = $accessor;
