@@ -71,5 +71,5 @@ var DraggableTable = function(element) {
                 }
             });
         }
-    }).disableSelection();
+    });
 };
