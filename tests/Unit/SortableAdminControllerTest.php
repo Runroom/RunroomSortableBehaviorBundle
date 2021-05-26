@@ -44,7 +44,7 @@ class SortableAdminControllerTest extends TestCase
     /** @var MockObject&ContainerInterface */
     private $container;
 
-    /** @var MockObject&AdminInterface */
+    /** @var MockObject&AdminInterface<object> */
     private $admin;
 
     /** @var Request */
@@ -159,7 +159,9 @@ class SortableAdminControllerTest extends TestCase
             ['session', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $session],
             ['admin_code.template_registry', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, new TemplateRegistry()],
             ['sonata.admin.pool', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool],
+            ['sonata.admin.pool.do-not-use', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool],
             ['sonata.admin.breadcrumbs_builder', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $breadcrumbsBuilder],
+            ['sonata.admin.breadcrumbs_builder.do-not-use', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $breadcrumbsBuilder],
         ]);
     }
 }

@@ -17,33 +17,34 @@ use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
+    // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $services = $containerConfigurator->services();
 
     $services->defaults();
 
     $services->set(SortableAdminController::class)
         ->public()
-        ->arg('$accessor', ref('property_accessor'))
-        ->arg('$positionHandler', ref('sortable_behavior.position'));
+        ->arg('$accessor', new ReferenceConfigurator('property_accessor'))
+        ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'));
 
     $services->set(ORMPositionHandler::class)
-        ->arg('$entityManager', ref('doctrine.orm.entity_manager'))
+        ->arg('$entityManager', new ReferenceConfigurator('doctrine.orm.entity_manager'))
         ->arg('$positionField', '%sortable.behavior.position.field%')
         ->arg('$sortableGroups', '%sortable.behavior.sortable_groups%')
-        ->call('setPropertyAccessor', [ref('property_accessor')]);
+        ->call('setPropertyAccessor', [new ReferenceConfigurator('property_accessor')]);
 
     $services->set(GedmoPositionHandler::class)
-        ->arg('$entityManager', ref('doctrine.orm.entity_manager'))
-        ->arg('$listener', ref('runroom.sortable_behavior.sortable_listener'))
-        ->call('setPropertyAccessor', [ref('property_accessor')]);
+        ->arg('$entityManager', new ReferenceConfigurator('doctrine.orm.entity_manager'))
+        ->arg('$listener', new ReferenceConfigurator('runroom.sortable_behavior.sortable_listener'))
+        ->call('setPropertyAccessor', [new ReferenceConfigurator('property_accessor')]);
 
     $services->set(ObjectPositionExtension::class)
-        ->arg('$positionHandler', ref('sortable_behavior.position'))
+        ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'))
         ->tag('twig.extension');
 
     $services->set('runroom.sortable_behavior.sortable_listener', SortableListener::class)
-        ->call('setAnnotationReader', [ref('annotation_reader')]);
+        ->call('setAnnotationReader', [new ReferenceConfigurator('annotation_reader')]);
 };
