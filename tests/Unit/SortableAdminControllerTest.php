@@ -70,6 +70,7 @@ class SortableAdminControllerTest extends TestCase
             $this->positionHandler
         );
         $this->controller->setContainer($this->container);
+        $this->controller->configureAdmin($this->request);
     }
 
     /** @test */
@@ -126,9 +127,12 @@ class SortableAdminControllerTest extends TestCase
 
     private function configureCRUDController(): void
     {
-        $this->admin->method('getTemplate')->with('layout')->willReturn('layout.html.twig');
+        /* @phpstan-ignore-next-line */
+        if (method_exists(AdminInterface::class, 'hasTemplateRegistry')) {
+            $this->admin->method('hasTemplateRegistry')->willReturn(true);
+        }
         $this->admin->method('isChild')->willReturn(false);
-        $this->admin->expects(self::once())->method('setRequest')->with($this->request);
+        $this->admin->method('setRequest')->with($this->request);
         $this->admin->method('getCode')->willReturn('admin_code');
     }
 
@@ -141,11 +145,12 @@ class SortableAdminControllerTest extends TestCase
     {
         $translator = $this->createMock(TranslatorInterface::class);
         $breadcrumbsBuilder = $this->createStub(BreadcrumbsBuilderInterface::class);
-        $pool = $this->createMock(Pool::class);
+        $pool = new Pool($this->container, [
+            'admin.code' => 'admin_code',
+        ]);
         $session = $this->createStub(Session::class);
         $flashBag = $this->createStub(FlashBagInterface::class);
 
-        $pool->method('getAdminByAdminCode')->with('admin_code')->willReturn($this->admin);
         $translator->method('trans')->with(self::anything(), [], 'domain', null)->willReturn('trans');
         $session->method('getFlashBag')->willReturn($flashBag);
 
@@ -154,6 +159,7 @@ class SortableAdminControllerTest extends TestCase
 
         $this->container->method('has')->with('session')->willReturn(true);
         $this->container->method('get')->willReturnMap([
+            ['admin_code', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $this->admin],
             ['request_stack', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $requestStack],
             ['translator', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $translator],
             ['session', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $session],
