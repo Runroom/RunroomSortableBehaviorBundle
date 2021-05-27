@@ -17,8 +17,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 abstract class AbstractPositionHandler implements PositionHandlerInterface
 {
-    /** @var PropertyAccessorInterface */
-    private $propertyAccessor;
+    private PropertyAccessorInterface $propertyAccessor;
 
     abstract public function getLastPosition(object $entity): int;
 

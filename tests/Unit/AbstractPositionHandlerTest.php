@@ -20,11 +20,8 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class AbstractPositionHandlerTest extends TestCase
 {
-    /** @var SortableEntity */
-    private $entity;
-
-    /** @var TestPositionHandler */
-    private $positionHandler;
+    private SortableEntity $entity;
+    private TestPositionHandler $positionHandler;
 
     protected function setUp(): void
     {

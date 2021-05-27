@@ -19,14 +19,11 @@ use Gedmo\Sortable\SortableListener;
 
 final class GedmoPositionHandler extends AbstractPositionHandler
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var SortableListener */
-    private $listener;
+    private EntityManagerInterface $entityManager;
+    private SortableListener $listener;
 
     /** @var array<string, int> */
-    private $cacheLastPosition = [];
+    private array $cacheLastPosition = [];
 
     public function __construct(
         EntityManagerInterface $entityManager,

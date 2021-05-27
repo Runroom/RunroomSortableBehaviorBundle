@@ -19,8 +19,7 @@ use Twig\TwigFunction;
 
 final class ObjectPositionExtension extends AbstractExtension
 {
-    /** @var PositionHandlerInterface */
-    private $positionHandler;
+    private PositionHandlerInterface $positionHandler;
 
     public function __construct(PositionHandlerInterface $positionHandler)
     {

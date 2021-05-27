@@ -35,8 +35,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SortableAdminControllerTest extends TestCase
 {
-    /** @var PropertyAccessor */
-    private $propertyAccessor;
+    private PropertyAccessor $propertyAccessor;
 
     /** @var MockObject&PositionHandlerInterface */
     private $positionHandler;
@@ -47,11 +46,8 @@ class SortableAdminControllerTest extends TestCase
     /** @var MockObject&AdminInterface<object> */
     private $admin;
 
-    /** @var Request */
-    private $request;
-
-    /** @var SortableAdminController */
-    private $controller;
+    private Request $request;
+    private SortableAdminController $controller;
 
     protected function setUp(): void
     {

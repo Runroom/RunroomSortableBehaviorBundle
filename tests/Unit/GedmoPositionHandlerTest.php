@@ -32,8 +32,7 @@ class GedmoPositionHandlerTest extends TestCase
     /** @var MockObject&SortableListener */
     private $listener;
 
-    /** @var GedmoPositionHandler */
-    private $positionHandler;
+    private GedmoPositionHandler $positionHandler;
 
     protected function setUp(): void
     {

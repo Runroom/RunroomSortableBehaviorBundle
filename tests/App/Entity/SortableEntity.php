@@ -23,29 +23,23 @@ class SortableEntity extends AbstractSortableEntity
     use Sortable;
 
     /**
-     * @var int|null
-     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
-     * @var int|null
-     *
      * @Gedmo\SortableGroup
      * @ORM\Column(type="integer")
      */
-    private $group;
+    private ?int $group = null;
 
     /**
-     * @var SortableGroup|null
-     *
      * @Gedmo\SortableGroup
      * @ORM\Column(type="integer")
      */
-    private $sortableGroup;
+    private ?SortableGroup $sortableGroup = null;
 
     public function getId(): ?int
     {

@@ -28,8 +28,7 @@ class ORMPositionHandlerTest extends TestCase
     /** @var Stub&EntityManagerInterface */
     private $entityManager;
 
-    /** @var ORMPositionHandler */
-    private $positionHandler;
+    private ORMPositionHandler $positionHandler;
 
     protected function setUp(): void
     {

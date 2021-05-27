@@ -24,8 +24,7 @@ class ObjectPositionExtensionTest extends TestCase
     /** @var MockObject&PositionHandlerInterface */
     private $positionHandler;
 
-    /** @var ObjectPositionExtension */
-    private $extension;
+    private ObjectPositionExtension $extension;
 
     protected function setUp(): void
     {

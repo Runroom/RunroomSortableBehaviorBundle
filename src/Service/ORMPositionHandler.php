@@ -18,17 +18,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class ORMPositionHandler extends AbstractPositionHandler
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     /** @var array{ entities: array<class-string, string>, default: string } */
-    private $positionField;
+    private array $positionField;
 
     /** @var array{ entities: array<class-string, string[]> } */
-    private $sortableGroups;
+    private array $sortableGroups;
 
     /** @var array<string, int> */
-    private static $cacheLastPosition = [];
+    private static array $cacheLastPosition = [];
 
     /**
      * @param array{

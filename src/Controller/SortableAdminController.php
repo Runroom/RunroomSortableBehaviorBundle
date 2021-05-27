@@ -22,11 +22,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 /** @extends CRUDController<object> */
 class SortableAdminController extends CRUDController
 {
-    /** @var PropertyAccessorInterface */
-    private $accessor;
-
-    /** @var PositionHandlerInterface */
-    private $positionHandler;
+    private PropertyAccessorInterface $accessor;
+    private PositionHandlerInterface $positionHandler;
 
     public function __construct(
         PropertyAccessorInterface $accessor,
