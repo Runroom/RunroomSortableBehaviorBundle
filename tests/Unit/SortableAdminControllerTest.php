@@ -138,25 +138,22 @@ class SortableAdminControllerTest extends TestCase
 
     private function configureContainer(): void
     {
-        $translator = new Translator('en');
         $breadcrumbsBuilder = $this->createStub(BreadcrumbsBuilderInterface::class);
+        $session = $this->createStub(Session::class);
 
         $pool = new Pool($this->container, [
             'admin.code' => 'admin_code',
         ]);
-        $session = $this->createStub(Session::class);
         $flashBag = new FlashBag();
+        $requestStack = new RequestStack();
 
         $session->method('getFlashBag')->willReturn($flashBag);
 
-        $requestStack = new RequestStack();
         $requestStack->push($this->request);
-
         $this->request->setSession($session);
-
         $this->container->set('admin_code', $this->admin);
         $this->container->set('request_stack', $requestStack);
-        $this->container->set('translator', $translator);
+        $this->container->set('translator', new Translator('en'));
         $this->container->set('session', $session);
         $this->container->set('admin_code.template_registry', new TemplateRegistry());
         $this->container->set('sonata.admin.pool', $pool);
