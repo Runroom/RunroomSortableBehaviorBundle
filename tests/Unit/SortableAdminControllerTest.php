@@ -22,16 +22,16 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Admin\BreadcrumbsBuilderInterface;
 use Sonata\AdminBundle\Admin\Pool;
 use Sonata\AdminBundle\Templating\TemplateRegistry;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\Translator;
 
 class SortableAdminControllerTest extends TestCase
 {
@@ -40,8 +40,7 @@ class SortableAdminControllerTest extends TestCase
     /** @var MockObject&PositionHandlerInterface */
     private $positionHandler;
 
-    /** @var MockObject&ContainerInterface */
-    private $container;
+    private Container $container;
 
     /** @var MockObject&AdminInterface<object> */
     private $admin;
@@ -53,7 +52,7 @@ class SortableAdminControllerTest extends TestCase
     {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
         $this->positionHandler = $this->createMock(PositionHandlerInterface::class);
-        $this->container = $this->createMock(ContainerInterface::class);
+        $this->container = new Container();
         $this->admin = $this->createMock(AdminInterface::class);
         $this->request = new Request();
 
@@ -139,31 +138,30 @@ class SortableAdminControllerTest extends TestCase
 
     private function configureContainer(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
+        $translator = new Translator('en');
         $breadcrumbsBuilder = $this->createStub(BreadcrumbsBuilderInterface::class);
+
         $pool = new Pool($this->container, [
             'admin.code' => 'admin_code',
         ]);
         $session = $this->createStub(Session::class);
-        $flashBag = $this->createStub(FlashBagInterface::class);
+        $flashBag = new FlashBag();
 
-        $translator->method('trans')->with(self::anything(), [], 'domain', null)->willReturn('trans');
         $session->method('getFlashBag')->willReturn($flashBag);
 
         $requestStack = new RequestStack();
         $requestStack->push($this->request);
 
-        $this->container->method('has')->with('session')->willReturn(true);
-        $this->container->method('get')->willReturnMap([
-            ['admin_code', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $this->admin],
-            ['request_stack', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $requestStack],
-            ['translator', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $translator],
-            ['session', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $session],
-            ['admin_code.template_registry', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, new TemplateRegistry()],
-            ['sonata.admin.pool', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool],
-            ['sonata.admin.pool.do-not-use', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $pool],
-            ['sonata.admin.breadcrumbs_builder', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $breadcrumbsBuilder],
-            ['sonata.admin.breadcrumbs_builder.do-not-use', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, $breadcrumbsBuilder],
-        ]);
+        $this->request->setSession($session);
+
+        $this->container->set('admin_code', $this->admin);
+        $this->container->set('request_stack', $requestStack);
+        $this->container->set('translator', $translator);
+        $this->container->set('session', $session);
+        $this->container->set('admin_code.template_registry', new TemplateRegistry());
+        $this->container->set('sonata.admin.pool', $pool);
+        $this->container->set('sonata.admin.pool.do-not-use', $pool);
+        $this->container->set('sonata.admin.breadcrumbs_builder', $breadcrumbsBuilder);
+        $this->container->set('sonata.admin.breadcrumbs_builder.do-not-use', $breadcrumbsBuilder);
     }
 }
