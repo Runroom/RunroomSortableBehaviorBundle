@@ -16,6 +16,7 @@ namespace Runroom\SortableBehaviorBundle\Controller;
 use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -33,7 +34,7 @@ class SortableAdminController extends CRUDController
         $this->positionHandler = $positionHandler;
     }
 
-    final public function moveAction(string $position): Response
+    final public function moveAction(Request $request, string $position): Response
     {
         if (!$this->admin->isGranted('EDIT')) {
             $this->addFlash(
@@ -47,9 +48,8 @@ class SortableAdminController extends CRUDController
             ));
         }
 
-        $object = $this->admin->getSubject();
-
-        if (null !== $object) {
+        if ($this->admin->hasSubject()) {
+            $object = $this->admin->getSubject();
             $lastPositionNumber = $this->positionHandler->getLastPosition($object);
             $newPositionNumber = $this->positionHandler->getPosition($object, $position, $lastPositionNumber);
 
@@ -57,7 +57,7 @@ class SortableAdminController extends CRUDController
 
             $this->admin->update($object);
 
-            if ($this->isXmlHttpRequest()) {
+            if ($this->isXmlHttpRequest($request)) {
                 return $this->renderJson([
                     'result' => 'ok',
                     'objectId' => $this->admin->getNormalizedIdentifier($object),
