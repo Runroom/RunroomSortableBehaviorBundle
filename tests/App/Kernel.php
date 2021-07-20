@@ -17,6 +17,7 @@ use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Runroom\SortableBehaviorBundle\RunroomSortableBehaviorBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
+use Sonata\AdminBundle\Twig\Extension\DeprecatedTextExtension;
 use Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
@@ -107,6 +108,14 @@ class Kernel extends BaseKernel
             'exception_controller' => null,
             'strict_variables' => '%kernel.debug%',
         ]);
+
+        if (class_exists(DeprecatedTextExtension::class)) {
+            $container->loadFromExtension('sonata_admin', [
+                'options' => [
+                    'legacy_twig_text_extension' => false,
+                ],
+            ]);
+        }
     }
 
     /**
