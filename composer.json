@@ -34,7 +34,7 @@
         "matthiasnoback/symfony-config-test": "^4.2",
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "phpunit/phpunit": "^9.5",
-        "runroom-packages/testing": "^0.11",
+        "runroom-packages/testing": "^0.11@dev",
         "sonata-project/admin-bundle": "^3.103 || ^4.0@dev",
         "sonata-project/doctrine-orm-admin-bundle": "^3.34 || ^4.0@dev",
         "symfony/phpunit-bridge": "^5.3"
@@ -48,7 +48,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.11-dev"
+            "dev-master": "0.12-dev"
         }
     },
     "autoload": {
