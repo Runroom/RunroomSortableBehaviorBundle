@@ -12,7 +12,6 @@ declare(strict_types=1);
  */
 
 use Gedmo\Sortable\SortableListener;
-use Runroom\SortableBehaviorBundle\Controller\SortableAdminController;
 use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
@@ -22,13 +21,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4.4
     $services = $containerConfigurator->services();
-
-    $services->defaults();
-
-    $services->set(SortableAdminController::class)
-        ->public()
-        ->arg('$accessor', new ReferenceConfigurator('property_accessor'))
-        ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'));
 
     $services->set(ORMPositionHandler::class)
         ->arg('$entityManager', new ReferenceConfigurator('doctrine.orm.entity_manager'))

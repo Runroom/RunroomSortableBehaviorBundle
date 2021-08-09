@@ -26,8 +26,15 @@ final class RunroomSortableBehaviorExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $bundles = $container->getParameter('kernel.bundles');
+        \assert(\is_array($bundles));
+
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.php');
+
+        if (isset($bundles['SonataAdminBundle'])) {
+            $loader->load('admin.php');
+        }
 
         $container->setParameter('sortable.behavior.position.field', $config['position_field']);
         $container->setParameter('sortable.behavior.sortable_groups', $config['sortable_groups']);

@@ -25,6 +25,9 @@ class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->container->setParameter('kernel.bundles', [
+            'SonataAdminBundle' => true,
+        ]);
 
         $this->load();
     }
