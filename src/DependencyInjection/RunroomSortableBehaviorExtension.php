@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\DependencyInjection;
 
+use Gedmo\Sortable\SortableListener;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -34,6 +35,10 @@ final class RunroomSortableBehaviorExtension extends Extension
 
         if (isset($bundles['SonataAdminBundle'])) {
             $loader->load('admin.php');
+        }
+
+        if (class_exists(SortableListener::class)) {
+            $loader->load('gedmo.php');
         }
 
         $container->setParameter('sortable.behavior.position.field', $config['position_field']);

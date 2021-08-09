@@ -29,6 +29,10 @@
         "symfony/translation": "^4.4 || ^5.3",
         "twig/twig": "^2.12 || ^3.0"
     },
+    "conflict": {
+        "gedmo/doctrine-extensions": "<3.0",
+        "sonata-project/admin-bundle": "<3.103"
+    },
     "require-dev": {
         "gedmo/doctrine-extensions": "^3.0",
         "matthiasnoback/symfony-config-test": "^4.2",
@@ -39,7 +43,9 @@
         "sonata-project/admin-bundle": "^3.103 || ^4.0@dev",
         "sonata-project/doctrine-orm-admin-bundle": "^3.34 || ^4.0@dev",
         "symfony/framework-bundle": "^4.4 || ^5.3",
-        "symfony/phpunit-bridge": "^5.3"
+        "symfony/phpunit-bridge": "^5.3",
+        "symfony/security-bundle": "^4.4 || ^5.3",
+        "symfony/twig-bundle": "^4.4 || ^5.3"
     },
     "suggest": {
         "sonata-project/admin-bundle": "Can be easily integrated with Sonata Admin bundle",
