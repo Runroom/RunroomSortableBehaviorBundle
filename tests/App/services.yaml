@@ -1,7 +1,4 @@
 services:
-    _defaults:
-        public: false
-
     Runroom\SortableBehaviorBundle\Tests\App\Admin\SortableEntityAdmin:
         public: true
         arguments: [null, Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity, null]

@@ -69,7 +69,7 @@ class GedmoPositionHandlerTest extends TestCase
         $queryBuilder->method('andWhere')->willReturn($queryBuilder);
         $queryBuilder->method('setParameter')->willReturn($queryBuilder);
         $queryBuilder->method('getQuery')->willReturn($query);
-        $query->expects(self::once())->method('disableResultCache');
+        $query->expects(static::once())->method('disableResultCache');
         $query->method('getSingleScalarResult')->willReturn(2);
         $this->entityManager->method('getClassMetadata')->with(ChildSortableEntity::class)->willReturn($meta);
         $this->entityManager->method('createQueryBuilder')->willReturn($queryBuilder);
@@ -81,7 +81,7 @@ class GedmoPositionHandlerTest extends TestCase
 
         $lastPosition = $this->positionHandler->getLastPosition($entity);
 
-        self::assertSame(2, $lastPosition);
+        static::assertSame(2, $lastPosition);
     }
 
     /** @test */
@@ -98,6 +98,6 @@ class GedmoPositionHandlerTest extends TestCase
 
         $positionField = $this->positionHandler->getPositionFieldByEntity(new SortableEntity());
 
-        self::assertSame('position', $positionField);
+        static::assertSame('position', $positionField);
     }
 }

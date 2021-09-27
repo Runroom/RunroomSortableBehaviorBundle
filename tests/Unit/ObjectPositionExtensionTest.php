@@ -42,7 +42,7 @@ class ObjectPositionExtensionTest extends TestCase
 
         $result = $this->extension->currentPosition($entity);
 
-        self::assertSame(3, $result);
+        static::assertSame(3, $result);
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class ObjectPositionExtensionTest extends TestCase
 
         $result = $this->extension->lastPosition($entity);
 
-        self::assertSame(10, $result);
+        static::assertSame(10, $result);
     }
 
     /** @test */
@@ -62,6 +62,6 @@ class ObjectPositionExtensionTest extends TestCase
     {
         $filters = $this->extension->getFunctions();
 
-        self::assertCount(2, $filters);
+        static::assertCount(2, $filters);
     }
 }

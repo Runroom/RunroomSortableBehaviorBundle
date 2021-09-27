@@ -56,13 +56,13 @@ class ORMPositionHandlerTest extends TestCase
         $queryBuilder->method('andWhere')->willReturn($queryBuilder);
         $queryBuilder->method('setParameter')->willReturn($queryBuilder);
         $queryBuilder->method('getQuery')->willReturn($query);
-        $query->expects(self::once())->method('disableResultCache');
+        $query->expects(static::once())->method('disableResultCache');
         $query->method('getSingleScalarResult')->willReturn(2);
         $this->entityManager->method('createQueryBuilder')->willReturn($queryBuilder);
 
         $lastPosition = $this->positionHandler->getLastPosition($entity);
 
-        self::assertSame(2, $lastPosition);
+        static::assertSame(2, $lastPosition);
     }
 
     /** @test */
@@ -70,6 +70,6 @@ class ORMPositionHandlerTest extends TestCase
     {
         $field = $this->positionHandler->getPositionFieldByEntity(new \stdClass());
 
-        self::assertSame('place', $field);
+        static::assertSame('place', $field);
     }
 }

@@ -74,7 +74,6 @@ class Kernel extends BaseKernel
             'router' => ['utf8' => true],
             'secret' => 'secret',
             'form' => ['enabled' => true],
-            'property_access' => ['enabled' => true],
         ]);
 
         $securityConfig = [

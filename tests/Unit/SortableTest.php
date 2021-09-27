@@ -27,6 +27,6 @@ class SortableTest extends TestCase
 
         $sortable = $sortable->setPosition(self::POSITION);
 
-        self::assertSame(self::POSITION, $sortable->getPosition());
+        static::assertSame(self::POSITION, $sortable->getPosition());
     }
 }

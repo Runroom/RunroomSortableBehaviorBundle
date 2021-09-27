@@ -81,7 +81,7 @@ class SortableAdminControllerTest extends TestCase
 
         $response = $this->controller->moveAction($this->request, 'up');
 
-        self::assertInstanceOf(RedirectResponse::class, $response);
+        static::assertInstanceOf(RedirectResponse::class, $response);
     }
 
     /** @test */
@@ -94,7 +94,7 @@ class SortableAdminControllerTest extends TestCase
         $this->admin->method('getSubject')->willReturn($entity);
         $this->admin->method('generateUrl')->with('list', ['filter' => []])->willReturn('https://localhost');
         $this->admin->method('getFilterParameters')->willReturn([]);
-        $this->admin->expects(self::once())->method('update')->with($entity);
+        $this->admin->expects(static::once())->method('update')->with($entity);
         $this->admin->method('getTranslationDomain')->willReturn('domain');
         $this->positionHandler->method('getLastPosition')->with($entity)->willReturn(2);
         $this->positionHandler->method('getPosition')->with($entity, 'up', 2)->willReturn(1);
@@ -102,7 +102,7 @@ class SortableAdminControllerTest extends TestCase
 
         $response = $this->controller->moveAction($this->request, 'up');
 
-        self::assertInstanceOf(RedirectResponse::class, $response);
+        static::assertInstanceOf(RedirectResponse::class, $response);
     }
 
     /** @test */
@@ -114,7 +114,7 @@ class SortableAdminControllerTest extends TestCase
         $this->admin->method('isGranted')->with('EDIT')->willReturn(true);
         $this->admin->method('hasSubject')->willReturn(true);
         $this->admin->method('getSubject')->willReturn($entity);
-        $this->admin->expects(self::once())->method('update')->with($entity);
+        $this->admin->expects(static::once())->method('update')->with($entity);
         $this->admin->method('getNormalizedIdentifier')->with($entity)->willReturn('identifier');
         $this->positionHandler->method('getLastPosition')->with($entity)->willReturn(2);
         $this->positionHandler->method('getPosition')->with($entity, 'up', 2)->willReturn(1);
@@ -122,7 +122,7 @@ class SortableAdminControllerTest extends TestCase
 
         $response = $this->controller->moveAction($this->request, 'up');
 
-        self::assertInstanceOf(JsonResponse::class, $response);
+        static::assertInstanceOf(JsonResponse::class, $response);
     }
 
     /* @todo: Simplify when dropping support for sonata-project/admin-bundle 3 */
