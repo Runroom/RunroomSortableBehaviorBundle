@@ -11,7 +11,7 @@
     processIsolation="false"
     stopOnFailure="false"
     bootstrap="vendor/autoload.php"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
 >
     <testsuite name="RunroomSortableBehaviorBundle">
         <directory>tests</directory>
