@@ -27,7 +27,7 @@ final class Configuration implements ConfigurationInterface
      *
      * @see https://github.com/psalm/psalm-plugin-symfony/issues/174
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('runroom_sortable_behavior');
         $rootNode = $treeBuilder->getRootNode();

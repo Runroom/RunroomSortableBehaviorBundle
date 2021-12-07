@@ -1,14 +1,13 @@
 {
     "name": "runroom-packages/sortable-behavior-bundle",
-    "type": "symfony-bundle",
     "description": "Provides a way to sort your admin listing",
+    "license": "MIT",
+    "type": "symfony-bundle",
     "keywords": [
         "sortable",
         "admin",
         "sonata"
     ],
-    "homepage": "https://github.com/runroom/RunroomSortableBehaviorBundle",
-    "license": "MIT",
     "authors": [
         {
             "name": "Runroom",
@@ -16,22 +15,19 @@
             "homepage": "https://www.runroom.com"
         }
     ],
+    "homepage": "https://github.com/runroom/RunroomSortableBehaviorBundle",
     "require": {
         "php": "^7.4 || ^8.0",
         "doctrine/common": "^3.1",
         "doctrine/doctrine-bundle": "^2.4",
         "doctrine/orm": "^2.9",
-        "symfony/config": "^4.4 || ^5.3",
-        "symfony/dependency-injection": "^4.4 || ^5.3",
-        "symfony/http-foundation": "^4.4.7 || ^5.3",
-        "symfony/http-kernel": "^4.4.13 || ^5.3",
-        "symfony/property-access": "^4.4 || ^5.3",
-        "symfony/translation": "^4.4 || ^5.3",
+        "symfony/config": "^4.4 || ^5.4 || ^6.0",
+        "symfony/dependency-injection": "^4.4 || ^5.4 || ^6.0",
+        "symfony/http-foundation": "^4.4.7 || ^5.4 || ^6.0",
+        "symfony/http-kernel": "^4.4.13 || ^5.4 || ^6.0",
+        "symfony/property-access": "^4.4 || ^5.4 || ^6.0",
+        "symfony/translation": "^4.4 || ^5.4 || ^6.0",
         "twig/twig": "^2.12 || ^3.0"
-    },
-    "conflict": {
-        "gedmo/doctrine-extensions": "<3.0",
-        "sonata-project/admin-bundle": "<3.103"
     },
     "require-dev": {
         "gedmo/doctrine-extensions": "^3.0",
@@ -43,22 +39,14 @@
         "runroom-packages/testing": "^0.14@dev",
         "sonata-project/admin-bundle": "^3.103 || ^4.0",
         "sonata-project/doctrine-orm-admin-bundle": "^3.34 || ^4.0",
-        "symfony/framework-bundle": "^4.4 || ^5.3",
-        "symfony/phpunit-bridge": "^5.3",
-        "symfony/security-bundle": "^4.4 || ^5.3",
-        "symfony/twig-bundle": "^4.4 || ^5.3"
+        "symfony/framework-bundle": "^4.4 || ^5.4 || ^6.0",
+        "symfony/phpunit-bridge": "^6.0",
+        "symfony/security-bundle": "^4.4 || ^5.4 || ^6.0",
+        "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.0"
     },
-    "suggest": {
-        "sonata-project/admin-bundle": "Can be easily integrated with Sonata Admin bundle",
-        "stof/doctrine-extensions-bundle": "Manage doctrine extensions with Symfony"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.14-dev"
-        }
+    "conflict": {
+        "gedmo/doctrine-extensions": "<3.0",
+        "sonata-project/admin-bundle": "<3.103"
     },
     "autoload": {
         "psr-4": {
@@ -68,6 +56,14 @@
     "autoload-dev": {
         "psr-4": {
             "Runroom\\SortableBehaviorBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.14-dev"
         }
     }
 }

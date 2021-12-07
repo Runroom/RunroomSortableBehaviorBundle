@@ -50,7 +50,6 @@ class SortableAdminControllerTest extends TestCase
     private Request $request;
     private SortableAdminController $controller;
 
-    /** @psalm-suppress InternalMethod setContainer is internal on Symfony 5.x */
     protected function setUp(): void
     {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
