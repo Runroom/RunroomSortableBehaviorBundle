@@ -36,7 +36,7 @@
         "matthiasnoback/symfony-dependency-injection-test": "^4.1",
         "phpunit/phpunit": "^9.5",
         "psr/container": "^1.1 || ^2.0",
-        "runroom-packages/testing": "^0.15.3",
+        "runroom-packages/testing": "^0.15@dev",
         "sonata-project/admin-bundle": "^3.103 || ^4.0",
         "sonata-project/doctrine-orm-admin-bundle": "^3.34 || ^4.0",
         "symfony/framework-bundle": "^4.4 || ^5.4 || ^6.0",
@@ -59,6 +59,10 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "ergebnis/composer-normalize": true
+        },
         "sort-packages": true
     },
     "extra": {
