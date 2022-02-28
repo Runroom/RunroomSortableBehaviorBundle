@@ -39,12 +39,16 @@ class SortableAdminControllerTest extends TestCase
 {
     private PropertyAccessor $propertyAccessor;
 
-    /** @var MockObject&PositionHandlerInterface */
+    /**
+     * @var MockObject&PositionHandlerInterface
+     */
     private $positionHandler;
 
     private Container $container;
 
-    /** @var MockObject&AdminInterface<object> */
+    /**
+     * @var MockObject&AdminInterface<object>
+     */
     private $admin;
 
     private Request $request;
@@ -70,7 +74,9 @@ class SortableAdminControllerTest extends TestCase
         $this->controller->configureAdmin($this->request);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itRedirectsWhenMissingPermissions(): void
     {
         $this->admin->method('isGranted')->with('EDIT')->willReturn(false);
@@ -83,7 +89,9 @@ class SortableAdminControllerTest extends TestCase
         static::assertInstanceOf(RedirectResponse::class, $response);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itMovesPositions(): void
     {
         $entity = new ChildSortableEntity();
@@ -104,7 +112,9 @@ class SortableAdminControllerTest extends TestCase
         static::assertInstanceOf(RedirectResponse::class, $response);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itMovesPositionsWithAjax(): void
     {
         $entity = new ChildSortableEntity();

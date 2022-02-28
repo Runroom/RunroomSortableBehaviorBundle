@@ -32,7 +32,9 @@ class AbstractPositionHandlerTest extends TestCase
         $this->positionHandler->setPropertyAccessor(PropertyAccess::createPropertyAccessor());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itGetsCurrentPosition(): void
     {
         $position = $this->positionHandler->getCurrentPosition($this->entity);
@@ -40,7 +42,9 @@ class AbstractPositionHandlerTest extends TestCase
         static::assertSame(3, $position);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itUpdatesThePosition(): void
     {
         $lastPosition = $this->positionHandler->getLastPosition($this->entity);

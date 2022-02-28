@@ -25,7 +25,9 @@ use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableGroup;
 
 class ORMPositionHandlerTest extends TestCase
 {
-    /** @var Stub&EntityManagerInterface */
+    /**
+     * @var Stub&EntityManagerInterface
+     */
     private $entityManager;
 
     private ORMPositionHandler $positionHandler;
@@ -41,7 +43,9 @@ class ORMPositionHandlerTest extends TestCase
         );
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
@@ -65,7 +69,9 @@ class ORMPositionHandlerTest extends TestCase
         static::assertSame(2, $lastPosition);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itGetsPositionFieldByEntity(): void
     {
         $field = $this->positionHandler->getPositionFieldByEntity(new \stdClass());

@@ -21,7 +21,9 @@ use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 
 class ObjectPositionExtensionTest extends TestCase
 {
-    /** @var MockObject&PositionHandlerInterface */
+    /**
+     * @var MockObject&PositionHandlerInterface
+     */
     private $positionHandler;
 
     private ObjectPositionExtension $extension;
@@ -33,7 +35,9 @@ class ObjectPositionExtensionTest extends TestCase
         $this->extension = new ObjectPositionExtension($this->positionHandler);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itGetsCurrentPosition(): void
     {
         $entity = new ChildSortableEntity();
@@ -45,7 +49,9 @@ class ObjectPositionExtensionTest extends TestCase
         static::assertSame(3, $result);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
@@ -57,7 +63,9 @@ class ObjectPositionExtensionTest extends TestCase
         static::assertSame(10, $result);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itDefinesTwoFunctions(): void
     {
         $filters = $this->extension->getFunctions();

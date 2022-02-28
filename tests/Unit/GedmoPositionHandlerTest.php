@@ -26,10 +26,14 @@ use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 
 class GedmoPositionHandlerTest extends TestCase
 {
-    /** @var MockObject&EntityManagerInterface */
+    /**
+     * @var MockObject&EntityManagerInterface
+     */
     private $entityManager;
 
-    /** @var MockObject&SortableListener */
+    /**
+     * @var MockObject&SortableListener
+     */
     private $listener;
 
     private GedmoPositionHandler $positionHandler;
@@ -45,7 +49,9 @@ class GedmoPositionHandlerTest extends TestCase
         );
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
@@ -84,7 +90,9 @@ class GedmoPositionHandlerTest extends TestCase
         static::assertSame(2, $lastPosition);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itGetsPositionFieldByEntity(): void
     {
         $meta = $this->createStub(ClassMetadata::class);

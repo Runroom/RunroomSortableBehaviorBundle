@@ -22,7 +22,9 @@ final class GedmoPositionHandler extends AbstractPositionHandler
     private EntityManagerInterface $entityManager;
     private SortableListener $listener;
 
-    /** @var array<string, int> */
+    /**
+     * @var array<string, int>
+     */
     private array $cacheLastPosition = [];
 
     public function __construct(

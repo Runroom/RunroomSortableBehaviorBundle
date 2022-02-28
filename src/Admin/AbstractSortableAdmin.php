@@ -24,7 +24,9 @@ use Sonata\AdminBundle\Route\RouteCollectionInterface;
  */
 abstract class AbstractSortableAdmin extends AbstractAdmin
 {
-    /** @param mixed[] $sortValues */
+    /**
+     * @param mixed[] $sortValues
+     */
     protected function configureDefaultSortValues(array &$sortValues): void
     {
         $sortValues['_sort_by'] = 'position';

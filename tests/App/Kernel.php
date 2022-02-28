@@ -27,7 +27,6 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Routing\RouteCollectionBuilder;
 use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
 
 class Kernel extends BaseKernel
@@ -64,7 +63,9 @@ class Kernel extends BaseKernel
         return __DIR__;
     }
 
-    /** @todo: Simplify security configuration when dropping support for Symfony 4 */
+    /**
+     * @todo: Simplify security configuration when dropping support for Symfony 4
+     */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $loader->load($this->getProjectDir() . '/services.yaml');
@@ -118,9 +119,9 @@ class Kernel extends BaseKernel
     }
 
     /**
-     * @todo: Simplify this method when dropping support for Symfony 4
+     * @todo: Add typehint when dropping support for Symfony 4
      *
-     * @param RouteCollectionBuilder|RoutingConfigurator $routes
+     * @param RoutingConfigurator $routes
      */
     protected function configureRoutes($routes): void
     {

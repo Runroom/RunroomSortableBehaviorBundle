@@ -20,7 +20,9 @@ class SortableTest extends TestCase
 {
     public const POSITION = 42;
 
-    /** @test */
+    /**
+     * @test
+     */
     public function itSetsAndGetsPosition(): void
     {
         $sortable = new SortableEntity();
