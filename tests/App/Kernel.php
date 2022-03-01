@@ -68,7 +68,7 @@ class Kernel extends BaseKernel
      */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
-        $loader->load($this->getProjectDir() . '/services.yaml');
+        $loader->load($this->getProjectDir() . '/services.php');
 
         $container->loadFromExtension('framework', [
             'test' => true,
