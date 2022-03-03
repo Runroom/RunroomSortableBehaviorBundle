@@ -27,7 +27,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->arg('$accessor', new ReferenceConfigurator('property_accessor'))
         ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'));
 
-    /* @todo: Simplify this when dropping support for SonataAdminBundle 3 */
+    /**
+     * @todo: Simplify this when dropping support for SonataAdminBundle 3
+     */
     if (is_a(CRUDController::class, AbstractController::class, true)) {
         $sortableAdminController
             ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])

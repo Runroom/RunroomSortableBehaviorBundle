@@ -28,7 +28,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'label' => 'Sortable Entity',
         ]);
 
-    /* @todo: Simplify this when dropping support for SonataAdminBundle 3 */
+    /**
+     * @todo: Simplify this when dropping support for SonataAdminBundle 3
+     */
     if (!is_a(CRUDController::class, AbstractController::class, true)) {
         $sortableEntityAdmin->args([null, SortableEntity::class, null]);
     }

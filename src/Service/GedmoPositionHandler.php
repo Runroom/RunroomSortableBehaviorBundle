@@ -37,9 +37,13 @@ final class GedmoPositionHandler extends AbstractPositionHandler
 
     public function getLastPosition(object $entity): int
     {
-        /** @var ClassMetadata<object> */
+        /**
+         * @var ClassMetadata<object>
+         */
         $meta = $this->entityManager->getClassMetadata(\get_class($entity));
-        /** @var array{ useObjectClass: string, position: string, groups?: class-string[] } */
+        /**
+         * @var array{ useObjectClass: string, position: string, groups?: class-string[] }
+         */
         $config = $this->listener->getConfiguration($this->entityManager, $meta->getName());
 
         $groups = [];

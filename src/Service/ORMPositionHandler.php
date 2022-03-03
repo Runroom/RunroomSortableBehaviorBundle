@@ -60,7 +60,9 @@ final class ORMPositionHandler extends AbstractPositionHandler
         $parentEntityClass = true;
 
         while ($parentEntityClass) {
-            /** @var class-string|false */
+            /**
+             * @var class-string|false
+             */
             $parentEntityClass = ClassUtils::getParentClass($entityClass);
 
             if (false !== $parentEntityClass && class_exists($parentEntityClass)) {

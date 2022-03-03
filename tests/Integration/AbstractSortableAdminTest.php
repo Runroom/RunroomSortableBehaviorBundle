@@ -17,7 +17,9 @@ use Runroom\SortableBehaviorBundle\Tests\App\Admin\SortableEntityAdmin;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Runroom\Testing\TestCase\SonataAdminTestCase;
 
-/** @extends SonataAdminTestCase<SortableEntity> */
+/**
+ * @extends SonataAdminTestCase<SortableEntity>
+ */
 class AbstractSortableAdminTest extends SonataAdminTestCase
 {
     /**

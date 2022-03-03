@@ -134,10 +134,14 @@ class SortableAdminControllerTest extends TestCase
         static::assertInstanceOf(JsonResponse::class, $response);
     }
 
-    /* @todo: Simplify when dropping support for sonata-project/admin-bundle 3 */
+    /**
+     * @todo: Simplify when dropping support for sonata-project/admin-bundle 3
+     */
     private function configureCRUDController(): void
     {
-        /* @phpstan-ignore-next-line */
+        /**
+         * @phpstan-ignore-next-line
+         */
         if (method_exists(TemplateRegistryAwareInterface::class, 'hasTemplateRegistry')) {
             $this->admin->method('hasTemplateRegistry')->willReturn(true);
         }

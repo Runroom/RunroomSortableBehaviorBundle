@@ -20,7 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
-/** @extends CRUDController<object> */
+/**
+ * @extends CRUDController<object>
+ */
 class SortableAdminController extends CRUDController
 {
     private PropertyAccessorInterface $accessor;
