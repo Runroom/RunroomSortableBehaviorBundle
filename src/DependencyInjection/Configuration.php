@@ -37,9 +37,7 @@ final class Configuration implements ConfigurationInterface
                 ->cannotBeEmpty()
                 ->defaultValue(class_exists(SortableListener::class) ? GedmoPositionHandler::class : ORMPositionHandler::class)
                 ->validate()
-                    ->ifTrue(function (string $config): bool {
-                        return !is_a($config, PositionHandlerInterface::class, true);
-                    })
+                    ->ifTrue(fn (string $config): bool => !is_a($config, PositionHandlerInterface::class, true))
                     ->thenInvalid('%s must implement ' . PositionHandlerInterface::class)
                 ->end()
             ->end()
