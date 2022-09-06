@@ -26,5 +26,5 @@ trait SortableAdminTrait
         $collection->add('move', $this->getRouterIdParameter() . '/move/{position}');
     }
 
-    abstract function getRouterIdParameter(): string;
+    abstract public function getRouterIdParameter(): string;
 }
