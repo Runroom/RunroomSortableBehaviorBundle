@@ -18,7 +18,7 @@ interface PositionHandlerInterface
     public function getLastPosition(object $entity): int;
 
     /**
-     * @param object|string $entity
+     * @param object|class-string $entity
      */
     public function getPositionFieldByEntity($entity): string;
 
