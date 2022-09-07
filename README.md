@@ -83,19 +83,6 @@ class ExampleAdmin extends AbstractAdmin
 }
 ```
 
-Finally, you should configure your admin to use the the `SortableAdminController` controller:
-
-```yaml
-# config/services.yaml
-
-services:
-    # ... rest of your services definition
-    App\Admin\ExampleAdmin:
-        public: true
-        tags:
-            - { name: sonata.admin, manager_type: orm, model_class: App\Entity\Example, controller: Runroom\SortableBehaviorBundle\Controller\SortableAdminController }
-```
-
 And that's all, you should now see the sort buttons on the list view of your admin class.
 
 ### Configuration

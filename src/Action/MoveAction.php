@@ -11,70 +11,78 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Runroom\SortableBehaviorBundle\Controller;
+namespace Runroom\SortableBehaviorBundle\Action;
 
 use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
-use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Request\AdminFetcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @extends CRUDController<object>
- */
-class SortableAdminController extends CRUDController
+final class MoveAction extends AbstractController
 {
     private PropertyAccessorInterface $accessor;
+    private TranslatorInterface $translator;
+    private AdminFetcherInterface $adminFetcher;
     private PositionHandlerInterface $positionHandler;
 
     public function __construct(
         PropertyAccessorInterface $accessor,
+        TranslatorInterface $translator,
+        AdminFetcherInterface $adminFetcher,
         PositionHandlerInterface $positionHandler
     ) {
         $this->accessor = $accessor;
+        $this->translator = $translator;
+        $this->adminFetcher = $adminFetcher;
         $this->positionHandler = $positionHandler;
     }
 
-    final public function moveAction(Request $request, string $position): Response
+    public function __invoke(Request $request, string $position): Response
     {
-        if (!$this->admin->isGranted('EDIT')) {
+        $admin = $this->adminFetcher->get($request);
+
+        if (!$admin->isGranted('EDIT')) {
             $this->addFlash(
                 'sonata_flash_error',
-                $this->trans('flash_error_no_rights_update_position')
+                $this->translator->trans('flash_error_no_rights_update_position')
             );
 
-            return new RedirectResponse($this->admin->generateUrl(
+            return new RedirectResponse($admin->generateUrl(
                 'list',
-                ['filter' => $this->admin->getFilterParameters()]
+                ['filter' => $admin->getFilterParameters()]
             ));
         }
 
-        if ($this->admin->hasSubject()) {
-            $object = $this->admin->getSubject();
+        if ($admin->hasSubject()) {
+            $object = $admin->getSubject();
             $lastPositionNumber = $this->positionHandler->getLastPosition($object);
             $newPositionNumber = $this->positionHandler->getPosition($object, $position, $lastPositionNumber);
 
             $this->accessor->setValue($object, $this->positionHandler->getPositionFieldByEntity($object), $newPositionNumber);
 
-            $this->admin->update($object);
+            $admin->update($object);
 
-            if ($this->isXmlHttpRequest($request)) {
-                return $this->renderJson([
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
                     'result' => 'ok',
-                    'objectId' => $this->admin->getNormalizedIdentifier($object),
+                    'objectId' => $admin->getNormalizedIdentifier($object),
                 ]);
             }
 
             $this->addFlash(
                 'sonata_flash_success',
-                $this->trans('flash_success_position_updated')
+                $this->translator->trans('flash_success_position_updated')
             );
         }
 
-        return new RedirectResponse($this->admin->generateUrl(
+        return new RedirectResponse($admin->generateUrl(
             'list',
-            ['filter' => $this->admin->getFilterParameters()]
+            ['filter' => $admin->getFilterParameters()]
         ));
     }
 }

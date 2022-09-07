@@ -11,13 +11,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use Gedmo\Sortable\SortableListener;
 use Runroom\SortableBehaviorBundle\Tests\App\Admin\SortableEntityAdmin;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
+    // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
     $sortableEntityAdmin = $services->set(SortableEntityAdmin::class)
@@ -34,4 +37,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     if (!is_a(CRUDController::class, AbstractController::class, true)) {
         $sortableEntityAdmin->args([null, SortableEntity::class, null]);
     }
+
+    $services->set(SortableListener::class)
+        ->tag('doctrine.event_subscriber')
+        ->call('setAnnotationReader', [new ReferenceConfigurator('annotation_reader')]);
 };

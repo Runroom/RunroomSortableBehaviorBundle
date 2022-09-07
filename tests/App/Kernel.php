@@ -19,6 +19,7 @@ use Runroom\SortableBehaviorBundle\RunroomSortableBehaviorBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
 use Sonata\AdminBundle\Twig\Extension\DeprecatedTextExtension;
 use Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -28,6 +29,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
+use Zenstruck\Foundry\ZenstruckFoundryBundle;
 
 class Kernel extends BaseKernel
 {
@@ -43,6 +45,7 @@ class Kernel extends BaseKernel
             new SonataAdminBundle(),
             new SonataDoctrineORMAdminBundle(),
             new TwigBundle(),
+            new ZenstruckFoundryBundle(),
 
             new RunroomSortableBehaviorBundle(),
         ];
@@ -70,12 +73,21 @@ class Kernel extends BaseKernel
     {
         $loader->load($this->getProjectDir() . '/services.php');
 
-        $container->loadFromExtension('framework', [
+        $frameworkConfig = [
             'test' => true,
             'router' => ['utf8' => true],
             'secret' => 'secret',
             'form' => ['enabled' => true],
-        ]);
+        ];
+
+        // @phpstan-ignore-next-line
+        if (method_exists(AbstractController::class, 'renderForm')) {
+            $frameworkConfig['session'] = ['storage_factory_id' => 'session.storage.factory.mock_file'];
+        } else {
+            $frameworkConfig['session'] = ['storage_id' => 'session.storage.mock_file'];
+        }
+
+        $container->loadFromExtension('framework', $frameworkConfig);
 
         $securityConfig = [
             'firewalls' => ['main' => []],
@@ -109,6 +121,10 @@ class Kernel extends BaseKernel
             'strict_variables' => '%kernel.debug%',
         ]);
 
+        $container->loadFromExtension('zenstruck_foundry', [
+            'auto_refresh_proxies' => false,
+        ]);
+
         if (class_exists(DeprecatedTextExtension::class)) {
             $container->loadFromExtension('sonata_admin', [
                 'options' => [
@@ -125,6 +141,7 @@ class Kernel extends BaseKernel
      */
     protected function configureRoutes($routes): void
     {
+        $routes->import($this->getProjectDir() . '/routing.yaml');
     }
 
     private function getBaseDir(): string

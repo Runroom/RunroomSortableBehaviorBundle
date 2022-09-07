@@ -12,9 +12,7 @@ declare(strict_types=1);
  */
 
 use Psr\Container\ContainerInterface;
-use Runroom\SortableBehaviorBundle\Controller\SortableAdminController;
-use Sonata\AdminBundle\Controller\CRUDController;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Runroom\SortableBehaviorBundle\Action\MoveAction;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
@@ -22,18 +20,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
-    $sortableAdminController = $services->set(SortableAdminController::class)
+    $services->set(MoveAction::class)
         ->public()
+        ->tag('container.service_subscriber')
+        ->tag('controller.service_arguments')
         ->arg('$accessor', new ReferenceConfigurator('property_accessor'))
-        ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'));
-
-    /**
-     * @todo: Simplify this when dropping support for SonataAdminBundle 3
-     */
-    if (is_a(CRUDController::class, AbstractController::class, true)) {
-        $sortableAdminController
-            ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)])
-            ->tag('container.service_subscriber')
-            ->tag('controller.service_arguments');
-    }
+        ->arg('$translator', new ReferenceConfigurator('translator'))
+        ->arg('$adminFetcher', new ReferenceConfigurator('sonata.admin.request.fetcher'))
+        ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'))
+        ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 };

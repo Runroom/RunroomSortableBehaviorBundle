@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Runroom\SortableBehaviorBundle\Tests\Integration;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
-use Runroom\SortableBehaviorBundle\Controller\SortableAdminController;
+use Runroom\SortableBehaviorBundle\Action\MoveAction;
 use Runroom\SortableBehaviorBundle\DependencyInjection\RunroomSortableBehaviorExtension;
 use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
@@ -37,7 +37,7 @@ class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase
      */
     public function itHasCoreServicesAlias(): void
     {
-        $this->assertContainerBuilderHasService(SortableAdminController::class);
+        $this->assertContainerBuilderHasService(MoveAction::class);
         $this->assertContainerBuilderHasService(ObjectPositionExtension::class);
         $this->assertContainerBuilderHasService(ORMPositionHandler::class);
         $this->assertContainerBuilderHasService(GedmoPositionHandler::class);

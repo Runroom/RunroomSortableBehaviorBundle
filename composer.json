@@ -39,10 +39,12 @@
         "runroom-packages/testing": "^0.16",
         "sonata-project/admin-bundle": "^3.103 || ^4.9",
         "sonata-project/doctrine-orm-admin-bundle": "^3.34 || ^4.0",
+        "symfony/browser-kit": "^5.4 || ^6.0",
         "symfony/framework-bundle": "^4.4 || ^5.4 || ^6.0",
         "symfony/phpunit-bridge": "^6.0",
         "symfony/security-bundle": "^4.4 || ^5.4 || ^6.0",
-        "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.0"
+        "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.0",
+        "zenstruck/foundry": "^1.13.2"
     },
     "conflict": {
         "gedmo/doctrine-extensions": "<3.0",

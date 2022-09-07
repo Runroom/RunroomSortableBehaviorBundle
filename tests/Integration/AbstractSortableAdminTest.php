@@ -25,7 +25,7 @@ class AbstractSortableAdminTest extends SonataAdminTestCase
     /**
      * @test
      */
-    public function itDoesNotHaveDisabledRoutes(): void
+    public function itDoesDefineMoveRoute(): void
     {
         $this->assertAdminRoutesDoesContainRoute('move');
     }

@@ -52,7 +52,7 @@ class ORMPositionHandlerTest extends TestCase
         $queryBuilder = $this->createMock(QueryBuilder::class);
         $query = $this->createMock(AbstractQuery::class);
 
-        $entity->setGroup(2);
+        $entity->setSimpleGroup(2);
         $entity->setSortableGroup(new SortableGroup());
 
         $queryBuilder->method('select')->with('MAX(t.position) as last_position')->willReturn($queryBuilder);

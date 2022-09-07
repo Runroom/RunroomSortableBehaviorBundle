@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Admin;
 
+use Runroom\SortableBehaviorBundle\Action\MoveAction;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
@@ -40,6 +41,8 @@ trait SortableAdminTrait
      */
     protected function configureRoutes(object $collection): void
     {
-        $collection->add('move', $this->getRouterIdParameter() . '/move/{position}');
+        $collection->add('move', $this->getRouterIdParameter() . '/move/{position}', [
+            '_controller' => MoveAction::class,
+        ]);
     }
 }

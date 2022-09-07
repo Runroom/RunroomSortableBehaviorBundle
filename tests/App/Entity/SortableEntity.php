@@ -33,13 +33,13 @@ class SortableEntity extends AbstractSortableEntity
 
     /**
      * @Gedmo\SortableGroup
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private ?int $group = null;
+    private ?int $simpleGroup = null;
 
     /**
      * @Gedmo\SortableGroup
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="SortableGroup")
      */
     private ?SortableGroup $sortableGroup = null;
 
@@ -48,16 +48,16 @@ class SortableEntity extends AbstractSortableEntity
         return $this->id;
     }
 
-    public function setGroup(?int $group): self
+    public function setSimpleGroup(?int $simpleGroup): self
     {
-        $this->group = $group;
+        $this->simpleGroup = $simpleGroup;
 
         return $this;
     }
 
-    public function getGroup(): ?int
+    public function getSimpleGroup(): ?int
     {
-        return $this->group;
+        return $this->simpleGroup;
     }
 
     public function setSortableGroup(?SortableGroup $sortableGroup): self
