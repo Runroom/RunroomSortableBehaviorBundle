@@ -36,7 +36,7 @@ final class RunroomSortableBehaviorExtension extends Extension
         $loader->load('services.php');
 
         if (isset($bundles['SonataAdminBundle'])) {
-            $loader->load('admin.php');
+            $loader->load('actions.php');
         }
 
         if (class_exists(SortableListener::class)) {

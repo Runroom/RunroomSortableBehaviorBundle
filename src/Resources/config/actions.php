@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
-    $services->set(MoveAction::class)
+    $services->set('runroom.sortable_behavior.action.move', MoveAction::class)
         ->public()
         ->tag('container.service_subscriber')
         ->tag('controller.service_arguments')

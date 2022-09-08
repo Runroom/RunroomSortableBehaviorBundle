@@ -20,13 +20,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
-    $services->set(ORMPositionHandler::class)
+    $services->set('runroom.sortable_behavior.service.orm_position', ORMPositionHandler::class)
         ->arg('$entityManager', new ReferenceConfigurator('doctrine.orm.entity_manager'))
         ->arg('$positionField', '%sortable.behavior.position.field%')
         ->arg('$sortableGroups', '%sortable.behavior.sortable_groups%')
         ->call('setPropertyAccessor', [new ReferenceConfigurator('property_accessor')]);
 
-    $services->set(ObjectPositionExtension::class)
+    $services->set('runroom.sortable_behavior.twig.object_position', ObjectPositionExtension::class)
         ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'))
         ->tag('twig.extension');
 };

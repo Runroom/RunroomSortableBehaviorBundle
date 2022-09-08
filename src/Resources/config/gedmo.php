@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
-    $services->set(GedmoPositionHandler::class)
+    $services->set('runroom.sortable_behavior.service.gedmo_position', GedmoPositionHandler::class)
         ->arg('$entityManager', new ReferenceConfigurator('doctrine.orm.entity_manager'))
         ->arg('$listener', new ReferenceConfigurator('runroom.sortable_behavior.sortable_listener'))
         ->call('setPropertyAccessor', [new ReferenceConfigurator('property_accessor')]);

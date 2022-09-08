@@ -14,9 +14,6 @@ declare(strict_types=1);
 namespace Runroom\SortableBehaviorBundle\DependencyInjection;
 
 use Gedmo\Sortable\SortableListener;
-use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
-use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
-use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -35,11 +32,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode->children()
             ->scalarNode('position_handler')
                 ->cannotBeEmpty()
-                ->defaultValue(class_exists(SortableListener::class) ? GedmoPositionHandler::class : ORMPositionHandler::class)
-                ->validate()
-                    ->ifTrue(fn (string $config): bool => !is_a($config, PositionHandlerInterface::class, true))
-                    ->thenInvalid('%s must implement ' . PositionHandlerInterface::class)
-                ->end()
+                ->defaultValue(class_exists(SortableListener::class) ? 'runroom.sortable_behavior.service.gedmo_position' : 'runroom.sortable_behavior.service.orm_position')
             ->end()
             ->arrayNode('position_field')
                 ->addDefaultsIfNotSet()

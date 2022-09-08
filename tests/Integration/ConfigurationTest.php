@@ -16,7 +16,6 @@ namespace Runroom\SortableBehaviorBundle\Tests\Integration;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionConfigurationTestCase;
 use Runroom\SortableBehaviorBundle\DependencyInjection\Configuration;
 use Runroom\SortableBehaviorBundle\DependencyInjection\RunroomSortableBehaviorExtension;
-use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -30,7 +29,7 @@ class ConfigurationTest extends AbstractExtensionConfigurationTestCase
     public function itExposesConfiguration(): void
     {
         $this->assertProcessedConfigurationEquals([
-            'position_handler' => GedmoPositionHandler::class,
+            'position_handler' => 'runroom.sortable_behavior.service.gedmo_position',
             'position_field' => [
                 'default' => 'position',
                 'entities' => [
