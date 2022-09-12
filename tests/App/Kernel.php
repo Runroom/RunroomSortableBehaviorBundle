@@ -78,6 +78,7 @@ class Kernel extends BaseKernel
             'router' => ['utf8' => true],
             'secret' => 'secret',
             'form' => ['enabled' => true],
+            'http_method_override' => false,
         ];
 
         // @phpstan-ignore-next-line
