@@ -17,7 +17,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 abstract class AbstractPositionHandler implements PositionHandlerInterface
 {
-    private PropertyAccessorInterface $propertyAccessor;
+    private ?PropertyAccessorInterface $propertyAccessor = null;
 
     abstract public function getLastPosition(object $entity): int;
 
@@ -32,12 +32,22 @@ abstract class AbstractPositionHandler implements PositionHandlerInterface
 
     public function getPropertyAccessor(): PropertyAccessorInterface
     {
+        if (null === $this->propertyAccessor) {
+            throw new \RuntimeException('Property accessor not set.');
+        }
+
         return $this->propertyAccessor;
     }
 
     public function getCurrentPosition(object $entity): int
     {
-        return $this->getPropertyAccessor()->getValue($entity, $this->getPositionFieldByEntity($entity));
+        $value = $this->getPropertyAccessor()->getValue($entity, $this->getPositionFieldByEntity($entity));
+
+        if (!is_numeric($value)) {
+            throw new \RuntimeException('Position field value must be numeric.');
+        }
+
+        return (int) $value;
     }
 
     public function getPosition(object $entity, string $movePosition, int $lastPosition): int

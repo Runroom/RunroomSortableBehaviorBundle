@@ -108,7 +108,10 @@ final class ORMPositionHandler extends AbstractPositionHandler
             $query = $queryBuilder->getQuery();
             $query->disableResultCache();
 
-            self::$cacheLastPosition[$cacheKey] = (int) $query->getSingleScalarResult();
+            $lastPosition = $query->getSingleScalarResult();
+            \assert(is_numeric($lastPosition));
+
+            self::$cacheLastPosition[$cacheKey] = (int) $lastPosition;
         }
 
         return self::$cacheLastPosition[$cacheKey];

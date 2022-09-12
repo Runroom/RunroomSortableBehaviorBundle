@@ -70,6 +70,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
 
         $meta = $this->entityManager->getClassMetadata($entity);
         $config = $this->listener->getConfiguration($this->entityManager, $meta->getName());
+        /** @var array{position: string} $config */
 
         return $config['position'];
     }
@@ -125,6 +126,9 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         $query = $queryBuilder->getQuery();
         $query->disableResultCache();
 
-        return (int) $query->getSingleScalarResult();
+        $lastPosition = $query->getSingleScalarResult();
+        \assert(is_numeric($lastPosition));
+
+        return (int) $lastPosition;
     }
 }
