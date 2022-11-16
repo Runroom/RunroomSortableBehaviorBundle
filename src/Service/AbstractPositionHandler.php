@@ -68,6 +68,9 @@ abstract class AbstractPositionHandler implements PositionHandlerInterface
                 $newPosition = $lastPosition;
                 break;
         }
+        if (is_numeric($movePosition)) {
+            $newPosition = (int)$movePosition;
+        }
 
         return max(0, min($newPosition, $lastPosition));
     }
