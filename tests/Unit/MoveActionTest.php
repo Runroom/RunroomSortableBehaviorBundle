@@ -73,10 +73,7 @@ class MoveActionTest extends TestCase
         $this->action->setContainer($this->container);
     }
 
-    /**
-     * @test
-     */
-    public function itRedirectsWhenMissingPermissions(): void
+    public function testItRedirectsWhenMissingPermissions(): void
     {
         $this->admin->method('isGranted')->with('EDIT')->willReturn(false);
         $this->admin->method('generateUrl')->with('list', ['filter' => []])->willReturn('https://localhost');
@@ -88,10 +85,7 @@ class MoveActionTest extends TestCase
         static::assertInstanceOf(RedirectResponse::class, $response);
     }
 
-    /**
-     * @test
-     */
-    public function itMovesPositions(): void
+    public function testItMovesPositions(): void
     {
         $entity = new ChildSortableEntity();
 
@@ -110,10 +104,7 @@ class MoveActionTest extends TestCase
         static::assertInstanceOf(RedirectResponse::class, $response);
     }
 
-    /**
-     * @test
-     */
-    public function itMovesPositionsWithAjax(): void
+    public function testItMovesPositionsWithAjax(): void
     {
         $entity = new ChildSortableEntity();
 

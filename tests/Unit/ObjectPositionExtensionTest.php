@@ -35,10 +35,7 @@ class ObjectPositionExtensionTest extends TestCase
         $this->extension = new ObjectPositionExtension($this->positionHandler);
     }
 
-    /**
-     * @test
-     */
-    public function itGetsCurrentPosition(): void
+    public function testItGetsCurrentPosition(): void
     {
         $entity = new ChildSortableEntity();
 
@@ -49,10 +46,7 @@ class ObjectPositionExtensionTest extends TestCase
         static::assertSame(3, $result);
     }
 
-    /**
-     * @test
-     */
-    public function itGetsLastPosition(): void
+    public function testItGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
 
@@ -63,10 +57,7 @@ class ObjectPositionExtensionTest extends TestCase
         static::assertSame(10, $result);
     }
 
-    /**
-     * @test
-     */
-    public function itDefinesTwoFunctions(): void
+    public function testItDefinesTwoFunctions(): void
     {
         $filters = $this->extension->getFunctions();
 

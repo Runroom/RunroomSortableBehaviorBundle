@@ -13,15 +13,22 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Behaviors;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+/**
+ * Keep annotations and attributes since this class is mean to be used by end user entities.
+ */
 trait Sortable
 {
     /**
      * @Gedmo\SortablePosition
+     *
      * @ORM\Column(type="integer")
      */
+    #[Gedmo\SortablePosition]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $position = null;
 
     public function setPosition(?int $position): self

@@ -69,8 +69,11 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         }
 
         $meta = $this->entityManager->getClassMetadata($entity);
+
+        /**
+         * @var array{position: string}
+         */
         $config = $this->listener->getConfiguration($this->entityManager, $meta->getName());
-        /** @var array{position: string} $config */
 
         return $config['position'];
     }

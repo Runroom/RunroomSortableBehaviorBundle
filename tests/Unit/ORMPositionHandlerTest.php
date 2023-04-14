@@ -43,10 +43,7 @@ class ORMPositionHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function itGetsLastPosition(): void
+    public function testItGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
         $queryBuilder = $this->createMock(QueryBuilder::class);
@@ -69,10 +66,7 @@ class ORMPositionHandlerTest extends TestCase
         static::assertSame(2, $lastPosition);
     }
 
-    /**
-     * @test
-     */
-    public function itGetsPositionFieldByEntity(): void
+    public function testItGetsPositionFieldByEntity(): void
     {
         $field = $this->positionHandler->getPositionFieldByEntity(new \stdClass());
 

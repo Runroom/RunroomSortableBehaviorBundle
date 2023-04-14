@@ -22,18 +22,12 @@ use Runroom\Testing\TestCase\SonataAdminTestCase;
  */
 class AbstractSortableAdminTest extends SonataAdminTestCase
 {
-    /**
-     * @test
-     */
-    public function itDoesDefineMoveRoute(): void
+    public function testItDoesDefineMoveRoute(): void
     {
         $this->assertAdminRoutesDoesContainRoute('move');
     }
 
-    /**
-     * @test
-     */
-    public function itDoesDefineDefaultFilterParameters(): void
+    public function testItDoesDefineDefaultFilterParameters(): void
     {
         $this->assertAdminFilterParametersContainsFilter('_sort_by', 'position');
     }

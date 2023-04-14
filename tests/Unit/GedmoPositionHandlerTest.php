@@ -49,10 +49,7 @@ class GedmoPositionHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function itGetsLastPosition(): void
+    public function testItGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
         $meta = $this->createStub(ClassMetadata::class);
@@ -90,10 +87,7 @@ class GedmoPositionHandlerTest extends TestCase
         static::assertSame(2, $lastPosition);
     }
 
-    /**
-     * @test
-     */
-    public function itGetsPositionFieldByEntity(): void
+    public function testItGetsPositionFieldByEntity(): void
     {
         $meta = $this->createStub(ClassMetadata::class);
 

@@ -79,6 +79,7 @@ class Kernel extends BaseKernel
             'secret' => 'secret',
             'form' => ['enabled' => true],
             'http_method_override' => false,
+            'annotations' => ['enabled' => true],
         ];
 
         // @phpstan-ignore-next-line

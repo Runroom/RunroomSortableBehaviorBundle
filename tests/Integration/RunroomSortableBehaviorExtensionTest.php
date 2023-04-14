@@ -33,10 +33,7 @@ class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase
         $this->load();
     }
 
-    /**
-     * @test
-     */
-    public function itHasCoreServicesAlias(): void
+    public function testItHasCoreServicesAlias(): void
     {
         $this->assertContainerBuilderHasService('runroom.sortable_behavior.action.move', MoveAction::class);
         $this->assertContainerBuilderHasService('runroom.sortable_behavior.twig.object_position', ObjectPositionExtension::class);
