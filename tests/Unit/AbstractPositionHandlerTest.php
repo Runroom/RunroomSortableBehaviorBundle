@@ -18,7 +18,7 @@ use Runroom\SortableBehaviorBundle\Service\AbstractPositionHandler;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class AbstractPositionHandlerTest extends TestCase
+final class AbstractPositionHandlerTest extends TestCase
 {
     private SortableEntity $entity;
     private TestPositionHandler $positionHandler;
@@ -57,7 +57,7 @@ class AbstractPositionHandlerTest extends TestCase
     }
 }
 
-class TestPositionHandler extends AbstractPositionHandler
+final class TestPositionHandler extends AbstractPositionHandler
 {
     public function getLastPosition(object $entity): int
     {

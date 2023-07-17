@@ -15,7 +15,9 @@ namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\Mapping\MappingException;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
@@ -23,13 +25,9 @@ use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableGroup;
 
-class ORMPositionHandlerTest extends TestCase
+final class ORMPositionHandlerTest extends TestCase
 {
-    /**
-     * @var Stub&EntityManagerInterface
-     */
-    private $entityManager;
-
+    private EntityManagerInterface&Stub $entityManager;
     private ORMPositionHandler $positionHandler;
 
     protected function setUp(): void
@@ -48,6 +46,7 @@ class ORMPositionHandlerTest extends TestCase
         $entity = new ChildSortableEntity();
         $queryBuilder = $this->createMock(QueryBuilder::class);
         $query = $this->createMock(AbstractQuery::class);
+        $classMetadata = new ClassMetadata($entity::class);
 
         $entity->setSimpleGroup(2);
         $entity->setSortableGroup(new SortableGroup());
@@ -60,6 +59,7 @@ class ORMPositionHandlerTest extends TestCase
         $query->expects(static::once())->method('disableResultCache');
         $query->method('getSingleScalarResult')->willReturn(2);
         $this->entityManager->method('createQueryBuilder')->willReturn($queryBuilder);
+        $this->entityManager->method('getClassMetadata')->willReturn($classMetadata);
 
         $lastPosition = $this->positionHandler->getLastPosition($entity);
 
@@ -68,6 +68,8 @@ class ORMPositionHandlerTest extends TestCase
 
     public function testItGetsPositionFieldByEntity(): void
     {
+        $this->entityManager->method('getClassMetadata')->willThrowException(new MappingException());
+
         $field = $this->positionHandler->getPositionFieldByEntity(new \stdClass());
 
         static::assertSame('place', $field);

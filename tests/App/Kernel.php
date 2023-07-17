@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\App;
 
+use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Knp\Bundle\MenuBundle\KnpMenuBundle;
 use Runroom\SortableBehaviorBundle\RunroomSortableBehaviorBundle;
 use Sonata\AdminBundle\SonataAdminBundle;
-use Sonata\AdminBundle\Twig\Extension\DeprecatedTextExtension;
 use Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -28,16 +27,16 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Security\Http\Authentication\AuthenticatorManager;
 use Zenstruck\Foundry\ZenstruckFoundryBundle;
 
-class Kernel extends BaseKernel
+final class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
     public function registerBundles(): iterable
     {
         return [
+            new DAMADoctrineTestBundle(),
             new DoctrineBundle(),
             new FrameworkBundle(),
             new KnpMenuBundle(),
@@ -66,39 +65,26 @@ class Kernel extends BaseKernel
         return __DIR__;
     }
 
-    /**
-     * @todo: Simplify security configuration when dropping support for Symfony 4
-     */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $loader->load($this->getProjectDir() . '/services.php');
 
-        $frameworkConfig = [
+        $container->loadFromExtension('framework', [
             'test' => true,
             'router' => ['utf8' => true],
             'secret' => 'secret',
+            'session' => ['storage_factory_id' => 'session.storage.factory.mock_file'],
             'form' => ['enabled' => true],
             'http_method_override' => false,
-            'annotations' => ['enabled' => true],
-        ];
-
-        // @phpstan-ignore-next-line
-        if (method_exists(AbstractController::class, 'renderForm')) {
-            $frameworkConfig['session'] = ['storage_factory_id' => 'session.storage.factory.mock_file'];
-        } else {
-            $frameworkConfig['session'] = ['storage_id' => 'session.storage.mock_file'];
-        }
-
-        $container->loadFromExtension('framework', $frameworkConfig);
+        ]);
 
         $securityConfig = [
             'firewalls' => ['main' => []],
         ];
 
-        if (class_exists(AuthenticatorManager::class)) {
+        // @todo: Remove if when dropping support of Symfony 5.4
+        if (!class_exists(IsGranted::class)) {
             $securityConfig['enable_authenticator_manager'] = true;
-        } else {
-            $securityConfig['firewalls']['main']['anonymous'] = true;
         }
 
         $container->loadFromExtension('security', $securityConfig);
@@ -109,7 +95,7 @@ class Kernel extends BaseKernel
                 'auto_mapping' => true,
                 'mappings' => [
                     'sortable_behavior' => [
-                        'type' => 'annotation',
+                        'type' => 'attribute',
                         'dir' => '%kernel.project_dir%/Entity',
                         'prefix' => 'Runroom\SortableBehaviorBundle\Tests\App\Entity',
                         'is_bundle' => false,
@@ -126,22 +112,9 @@ class Kernel extends BaseKernel
         $container->loadFromExtension('zenstruck_foundry', [
             'auto_refresh_proxies' => false,
         ]);
-
-        if (class_exists(DeprecatedTextExtension::class)) {
-            $container->loadFromExtension('sonata_admin', [
-                'options' => [
-                    'legacy_twig_text_extension' => false,
-                ],
-            ]);
-        }
     }
 
-    /**
-     * @todo: Add typehint when dropping support for Symfony 4
-     *
-     * @param RoutingConfigurator $routes
-     */
-    protected function configureRoutes($routes): void
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
         $routes->import($this->getProjectDir() . '/routing.yaml');
     }

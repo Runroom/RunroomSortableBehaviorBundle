@@ -19,18 +19,15 @@ use Twig\TwigFunction;
 
 final class ObjectPositionExtension extends AbstractExtension
 {
-    private PositionHandlerInterface $positionHandler;
-
-    public function __construct(PositionHandlerInterface $positionHandler)
+    public function __construct(private readonly PositionHandlerInterface $positionHandler)
     {
-        $this->positionHandler = $positionHandler;
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('currentObjectPosition', [$this, 'currentPosition']),
-            new TwigFunction('lastPosition', [$this, 'lastPosition']),
+            new TwigFunction('currentObjectPosition', $this->currentPosition(...)),
+            new TwigFunction('lastPosition', $this->lastPosition(...)),
         ];
     }
 

@@ -19,20 +19,15 @@ use Gedmo\Sortable\SortableListener;
 
 final class GedmoPositionHandler extends AbstractPositionHandler
 {
-    private EntityManagerInterface $entityManager;
-    private SortableListener $listener;
-
     /**
      * @var array<string, int>
      */
     private array $cacheLastPosition = [];
 
     public function __construct(
-        EntityManagerInterface $entityManager,
-        SortableListener $listener
+        private readonly EntityManagerInterface $entityManager,
+        private readonly SortableListener $listener
     ) {
-        $this->entityManager = $entityManager;
-        $this->listener = $listener;
     }
 
     public function getLastPosition(object $entity): int
@@ -40,7 +35,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         /**
          * @var ClassMetadata<object>
          */
-        $meta = $this->entityManager->getClassMetadata(\get_class($entity));
+        $meta = $this->entityManager->getClassMetadata($entity::class);
         /**
          * @var array{ useObjectClass: string, position: string, groups?: class-string[] }
          */
@@ -65,7 +60,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
     public function getPositionFieldByEntity($entity): string
     {
         if (\is_object($entity)) {
-            $entity = \get_class($entity);
+            $entity = $entity::class;
         }
 
         $meta = $this->entityManager->getClassMetadata($entity);

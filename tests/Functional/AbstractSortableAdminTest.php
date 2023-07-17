@@ -15,15 +15,13 @@ namespace Runroom\SortableBehaviorBundle\Tests\Functional;
 
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Zenstruck\Foundry\AnonymousFactory;
-use Zenstruck\Foundry\LazyValue;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
 use function Zenstruck\Foundry\anonymous;
 
-class AbstractSortableAdminTest extends WebTestCase
+final class AbstractSortableAdminTest extends WebTestCase
 {
     use Factories;
     use ResetDatabase;
@@ -32,21 +30,7 @@ class AbstractSortableAdminTest extends WebTestCase
     {
         $client = static::createClient();
 
-        /**
-         * @psalm-suppress DeprecatedClass
-         *
-         * @todo: simplify when dropping support for ZenstruckFoundryBundle < 1.10
-         */
-        if (class_exists(LazyValue::class)) {
-            $factory = anonymous(SortableEntity::class);
-        } else {
-            /**
-             * @psalm-suppress InvalidArgument
-             */
-            $factory = AnonymousFactory::new(SortableEntity::class);
-        }
-
-        $sortableEntities = $factory->many(4)->create();
+        $sortableEntities = anonymous(SortableEntity::class)->many(4)->create();
 
         /** @var Proxy<SortableEntity> */
         $sortableEntity1 = $sortableEntities[0];

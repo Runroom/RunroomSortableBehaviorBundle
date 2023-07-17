@@ -11,19 +11,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+use Gedmo\Mapping\Driver\AttributeReader;
 use Gedmo\Sortable\SortableListener;
 use Runroom\SortableBehaviorBundle\Tests\App\Admin\SortableEntityAdmin;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
-use Sonata\AdminBundle\Controller\CRUDController;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
-    $sortableEntityAdmin = $services->set(SortableEntityAdmin::class)
+    $services->set(SortableEntityAdmin::class)
         ->public()
         ->tag('sonata.admin', [
             'model_class' => SortableEntity::class,
@@ -31,14 +29,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'label' => 'Sortable Entity',
         ]);
 
-    /**
-     * @todo: Simplify this when dropping support for SonataAdminBundle 3
-     */
-    if (!is_a(CRUDController::class, AbstractController::class, true)) {
-        $sortableEntityAdmin->args([null, SortableEntity::class, null]);
-    }
+    $services->set('attribute_reader', AttributeReader::class);
 
     $services->set(SortableListener::class)
-        ->tag('doctrine.event_subscriber')
-        ->call('setAnnotationReader', [new ReferenceConfigurator('annotation_reader')]);
+        ->tag('doctrine.event_listener', ['event' => 'onFlush'])
+        ->tag('doctrine.event_listener', ['event' => 'loadClassMetadata'])
+        ->tag('doctrine.event_listener', ['event' => 'prePersist'])
+        ->tag('doctrine.event_listener', ['event' => 'postPersist'])
+        ->tag('doctrine.event_listener', ['event' => 'preUpdate'])
+        ->tag('doctrine.event_listener', ['event' => 'postRemove'])
+        ->tag('doctrine.event_listener', ['event' => 'postFlush'])
+        ->call('setAnnotationReader', [service('attribute_reader')]);
 };

@@ -19,13 +19,9 @@ use Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 
-class ObjectPositionExtensionTest extends TestCase
+final class ObjectPositionExtensionTest extends TestCase
 {
-    /**
-     * @var MockObject&PositionHandlerInterface
-     */
-    private $positionHandler;
-
+    private MockObject&PositionHandlerInterface $positionHandler;
     private ObjectPositionExtension $extension;
 
     protected function setUp(): void

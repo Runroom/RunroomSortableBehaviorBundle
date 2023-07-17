@@ -24,18 +24,10 @@ use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 
-class GedmoPositionHandlerTest extends TestCase
+final class GedmoPositionHandlerTest extends TestCase
 {
-    /**
-     * @var MockObject&EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var MockObject&SortableListener
-     */
-    private $listener;
-
+    private EntityManagerInterface&MockObject $entityManager;
+    private SortableListener&MockObject $listener;
     private GedmoPositionHandler $positionHandler;
 
     protected function setUp(): void

@@ -16,9 +16,9 @@ namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 
-class SortableTest extends TestCase
+final class SortableTest extends TestCase
 {
-    public const POSITION = 42;
+    final public const POSITION = 42;
 
     public function testItSetsAndGetsPosition(): void
     {

@@ -32,21 +32,16 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Translation\Translator;
 
-class MoveActionTest extends TestCase
+final class MoveActionTest extends TestCase
 {
     private PropertyAccessor $propertyAccessor;
-
-    /**
-     * @var MockObject&PositionHandlerInterface
-     */
-    private $positionHandler;
-
+    private MockObject&PositionHandlerInterface $positionHandler;
     private Container $container;
 
     /**
      * @var MockObject&AdminInterface<object>
      */
-    private $admin;
+    private MockObject&AdminInterface $admin;
 
     private Request $request;
     private MoveAction $action;

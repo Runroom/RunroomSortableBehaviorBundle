@@ -13,17 +13,11 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Admin;
 
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 trait SortableAdminTrait
 {
-    /**
-     * @todo: Add return typehint when dropping support for Sonata 3
-     *
-     * @return string
-     */
-    abstract public function getRouterIdParameter();
+    abstract public function getRouterIdParameter(): string;
 
     /**
      * @param mixed[] $sortValues
@@ -33,12 +27,7 @@ trait SortableAdminTrait
         $sortValues['_sort_by'] = 'position';
     }
 
-    /**
-     * @todo: Simplify this when dropping support for Sonata 3
-     *
-     * @param RouteCollection|RouteCollectionInterface $collection
-     */
-    protected function configureRoutes(object $collection): void
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('move', $this->getRouterIdParameter() . '/move/{position}', [
             '_controller' => 'runroom.sortable_behavior.action.move',

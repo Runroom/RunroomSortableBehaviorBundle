@@ -13,36 +13,27 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Runroom\SortableBehaviorBundle\Behaviors\Sortable;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class SortableEntity extends AbstractSortableEntity
 {
     use Sortable;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    /**
-     * @Gedmo\SortableGroup
-     *
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    #[Gedmo\SortableGroup]
     private ?int $simpleGroup = null;
 
-    /**
-     * @Gedmo\SortableGroup
-     *
-     * @ORM\OneToOne(targetEntity="SortableGroup")
-     */
+    #[ORM\OneToOne(targetEntity: SortableGroup::class)]
+    #[Gedmo\SortableGroup]
     private ?SortableGroup $sortableGroup = null;
 
     public function getId(): ?int

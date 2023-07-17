@@ -11,22 +11,21 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
 use Psr\Container\ContainerInterface;
 use Runroom\SortableBehaviorBundle\Action\MoveAction;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
     $services->set('runroom.sortable_behavior.action.move', MoveAction::class)
         ->public()
         ->tag('container.service_subscriber')
         ->tag('controller.service_arguments')
-        ->arg('$accessor', new ReferenceConfigurator('property_accessor'))
-        ->arg('$translator', new ReferenceConfigurator('translator'))
-        ->arg('$adminFetcher', new ReferenceConfigurator('sonata.admin.request.fetcher'))
-        ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'))
-        ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
+        ->arg('$accessor', service('property_accessor'))
+        ->arg('$translator', service('translator'))
+        ->arg('$adminFetcher', service('sonata.admin.request.fetcher'))
+        ->arg('$positionHandler', service('sortable_behavior.position'))
+        ->call('setContainer', [service(ContainerInterface::class)]);
 };

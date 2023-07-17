@@ -11,20 +11,22 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+use Gedmo\Mapping\Driver\AttributeReader;
 use Gedmo\Sortable\SortableListener;
 use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
     $services->set('runroom.sortable_behavior.service.gedmo_position', GedmoPositionHandler::class)
-        ->arg('$entityManager', new ReferenceConfigurator('doctrine.orm.entity_manager'))
-        ->arg('$listener', new ReferenceConfigurator('runroom.sortable_behavior.sortable_listener'))
-        ->call('setPropertyAccessor', [new ReferenceConfigurator('property_accessor')]);
+        ->arg('$entityManager', service('doctrine.orm.entity_manager'))
+        ->arg('$listener', service('runroom.sortable_behavior.sortable_listener'))
+        ->call('setPropertyAccessor', [service('property_accessor')]);
+
+    $services->set('runroom.sortable_behavior.attribute_reader', AttributeReader::class);
 
     $services->set('runroom.sortable_behavior.sortable_listener', SortableListener::class)
-        ->call('setAnnotationReader', [new ReferenceConfigurator('annotation_reader')]);
+        ->call('setAnnotationReader', [service('runroom.sortable_behavior.attribute_reader')]);
 };

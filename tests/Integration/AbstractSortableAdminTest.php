@@ -20,7 +20,7 @@ use Runroom\Testing\TestCase\SonataAdminTestCase;
 /**
  * @extends SonataAdminTestCase<SortableEntity>
  */
-class AbstractSortableAdminTest extends SonataAdminTestCase
+final class AbstractSortableAdminTest extends SonataAdminTestCase
 {
     public function testItDoesDefineMoveRoute(): void
     {

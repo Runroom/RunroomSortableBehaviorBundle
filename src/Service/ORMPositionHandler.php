@@ -13,23 +13,11 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Service;
 
-use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\Mapping\MappingException;
 
 final class ORMPositionHandler extends AbstractPositionHandler
 {
-    private EntityManagerInterface $entityManager;
-
-    /**
-     * @var array{ entities: array<class-string, string>, default: string }
-     */
-    private array $positionField;
-
-    /**
-     * @var array{ entities: array<class-string, string[]> }
-     */
-    private array $sortableGroups;
-
     /**
      * @var array<string, int>
      */
@@ -45,25 +33,19 @@ final class ORMPositionHandler extends AbstractPositionHandler
      * } $sortableGroups
      * */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        array $positionField,
-        array $sortableGroups
+        private readonly EntityManagerInterface $entityManager,
+        private readonly array $positionField,
+        private readonly array $sortableGroups
     ) {
-        $this->entityManager = $entityManager;
-        $this->positionField = $positionField;
-        $this->sortableGroups = $sortableGroups;
     }
 
     public function getLastPosition(object $entity): int
     {
-        $entityClass = ClassUtils::getClass($entity);
+        $entityClass = $this->getRealClass($entity);
         $parentEntityClass = true;
 
         while ($parentEntityClass) {
-            /**
-             * @var class-string|false
-             */
-            $parentEntityClass = ClassUtils::getParentClass($entityClass);
+            $parentEntityClass = get_parent_class($entityClass);
 
             if (false !== $parentEntityClass && class_exists($parentEntityClass)) {
                 $reflection = new \ReflectionClass($parentEntityClass);
@@ -120,14 +102,10 @@ final class ORMPositionHandler extends AbstractPositionHandler
     public function getPositionFieldByEntity($entity): string
     {
         if (\is_object($entity)) {
-            $entity = ClassUtils::getClass($entity);
+            $entity = $this->getRealClass($entity);
         }
 
-        if (isset($this->positionField['entities'][$entity])) {
-            return $this->positionField['entities'][$entity];
-        }
-
-        return $this->positionField['default'];
+        return $this->positionField['entities'][$entity] ?? $this->positionField['default'];
     }
 
     /**
@@ -149,7 +127,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
      */
     private function getCacheKeyForLastPosition(object $entity, array $groups): string
     {
-        $cacheKey = ClassUtils::getClass($entity);
+        $cacheKey = $this->getRealClass($entity);
 
         foreach ($groups as $groupName) {
             $value = '';
@@ -163,5 +141,19 @@ final class ORMPositionHandler extends AbstractPositionHandler
         }
 
         return $cacheKey;
+    }
+
+    /**
+     * @return class-string
+     */
+    private function getRealClass(object $object): string
+    {
+        $class = $object::class;
+
+        try {
+            return $this->entityManager->getClassMetadata($class)->getName();
+        } catch (MappingException) {
+            return $class;
+        }
     }
 }

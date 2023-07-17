@@ -11,22 +11,21 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    // Use "service" function for creating references to services when dropping support for Symfony 4
     $services = $containerConfigurator->services();
 
     $services->set('runroom.sortable_behavior.service.orm_position', ORMPositionHandler::class)
-        ->arg('$entityManager', new ReferenceConfigurator('doctrine.orm.entity_manager'))
-        ->arg('$positionField', '%sortable.behavior.position.field%')
-        ->arg('$sortableGroups', '%sortable.behavior.sortable_groups%')
-        ->call('setPropertyAccessor', [new ReferenceConfigurator('property_accessor')]);
+        ->arg('$entityManager', service('doctrine.orm.entity_manager'))
+        ->arg('$positionField', param('sortable.behavior.position.field'))
+        ->arg('$sortableGroups', param('sortable.behavior.sortable_groups'))
+        ->call('setPropertyAccessor', [service('property_accessor')]);
 
     $services->set('runroom.sortable_behavior.twig.object_position', ObjectPositionExtension::class)
-        ->arg('$positionHandler', new ReferenceConfigurator('sortable_behavior.position'))
+        ->arg('$positionHandler', service('sortable_behavior.position'))
         ->tag('twig.extension');
 };

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\Integration;
 
+use Gedmo\Mapping\Driver\AttributeReader;
 use Gedmo\Sortable\SortableListener;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Runroom\SortableBehaviorBundle\Action\MoveAction;
@@ -21,7 +22,7 @@ use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Service\ORMPositionHandler;
 use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 
-class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase
+final class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase
 {
     protected function setUp(): void
     {
@@ -39,6 +40,7 @@ class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('runroom.sortable_behavior.twig.object_position', ObjectPositionExtension::class);
         $this->assertContainerBuilderHasService('runroom.sortable_behavior.service.orm_position', ORMPositionHandler::class);
         $this->assertContainerBuilderHasService('runroom.sortable_behavior.service.gedmo_position', GedmoPositionHandler::class);
+        $this->assertContainerBuilderHasService('runroom.sortable_behavior.attribute_reader', AttributeReader::class);
         $this->assertContainerBuilderHasService('runroom.sortable_behavior.sortable_listener', SortableListener::class);
     }
 

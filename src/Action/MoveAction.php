@@ -25,21 +25,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class MoveAction extends AbstractController
 {
-    private PropertyAccessorInterface $accessor;
-    private TranslatorInterface $translator;
-    private AdminFetcherInterface $adminFetcher;
-    private PositionHandlerInterface $positionHandler;
-
     public function __construct(
-        PropertyAccessorInterface $accessor,
-        TranslatorInterface $translator,
-        AdminFetcherInterface $adminFetcher,
-        PositionHandlerInterface $positionHandler
+        private readonly PropertyAccessorInterface $accessor,
+        private readonly TranslatorInterface $translator,
+        private readonly AdminFetcherInterface $adminFetcher,
+        private readonly PositionHandlerInterface $positionHandler
     ) {
-        $this->accessor = $accessor;
-        $this->translator = $translator;
-        $this->adminFetcher = $adminFetcher;
-        $this->positionHandler = $positionHandler;
     }
 
     public function __invoke(Request $request, string $position): Response
