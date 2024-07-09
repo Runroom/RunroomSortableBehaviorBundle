@@ -19,6 +19,4 @@ use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 /**
  * @extends AbstractSortableAdmin<SortableEntity>
  */
-final class SortableEntityAdmin extends AbstractSortableAdmin
-{
-}
+final class SortableEntityAdmin extends AbstractSortableAdmin {}

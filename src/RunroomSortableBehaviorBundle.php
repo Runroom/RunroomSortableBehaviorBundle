@@ -15,6 +15,4 @@ namespace Runroom\SortableBehaviorBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-final class RunroomSortableBehaviorBundle extends Bundle
-{
-}
+final class RunroomSortableBehaviorBundle extends Bundle {}

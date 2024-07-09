@@ -13,6 +13,4 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\App\Entity;
 
-class ChildSortableEntity extends SortableEntity
-{
-}
+class ChildSortableEntity extends SortableEntity {}

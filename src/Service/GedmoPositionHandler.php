@@ -27,8 +27,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly SortableListener $listener
-    ) {
-    }
+    ) {}
 
     public function getLastPosition(object $entity): int
     {

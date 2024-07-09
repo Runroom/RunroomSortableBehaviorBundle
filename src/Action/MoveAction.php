@@ -30,8 +30,7 @@ final class MoveAction extends AbstractController
         private readonly TranslatorInterface $translator,
         private readonly AdminFetcherInterface $adminFetcher,
         private readonly PositionHandlerInterface $positionHandler
-    ) {
-    }
+    ) {}
 
     public function __invoke(Request $request, string $position): Response
     {
