@@ -62,7 +62,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
 
         if (!isset(self::$cacheLastPosition[$cacheKey])) {
             $queryBuilder = $this->entityManager->createQueryBuilder()
-                ->select(sprintf('MAX(t.%s) as last_position', $this->getPositionFieldByEntity($entityClass)))
+                ->select(\sprintf('MAX(t.%s) as last_position', $this->getPositionFieldByEntity($entityClass)))
                 ->from($entityClass, 't');
 
             if (\count($groups) > 0) {
@@ -78,8 +78,8 @@ final class ORMPositionHandler extends AbstractPositionHandler
 
                     if (null !== $value) {
                         $queryBuilder
-                            ->andWhere(sprintf('t.%s = :group_%s', $groupName, $index))
-                            ->setParameter(sprintf('group_%s', $index), $value);
+                            ->andWhere(\sprintf('t.%s = :group_%s', $groupName, $index))
+                            ->setParameter(\sprintf('group_%s', $index), $value);
 
                         ++$index;
                     }

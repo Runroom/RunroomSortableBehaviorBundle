@@ -106,16 +106,16 @@ final class GedmoPositionHandler extends AbstractPositionHandler
     private function queryLastPosition(array $config, array $groups): int
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
-        $queryBuilder->select(sprintf('MAX(n.%s)', $config['position']))
+        $queryBuilder->select(\sprintf('MAX(n.%s)', $config['position']))
             ->from($config['useObjectClass'], 'n');
 
         $index = 1;
         foreach ($groups as $groupName => $value) {
             if (null === $value) {
-                $queryBuilder->andWhere(sprintf('n.%s IS NULL', $groupName));
+                $queryBuilder->andWhere(\sprintf('n.%s IS NULL', $groupName));
             } else {
-                $queryBuilder->andWhere(sprintf('n.%s = :group_%s', $groupName, $index));
-                $queryBuilder->setParameter(sprintf('group_%s', $index), $value);
+                $queryBuilder->andWhere(\sprintf('n.%s = :group_%s', $groupName, $index));
+                $queryBuilder->setParameter(\sprintf('group_%s', $index), $value);
             }
             ++$index;
         }
