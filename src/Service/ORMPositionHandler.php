@@ -35,7 +35,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly array $positionField,
-        private readonly array $sortableGroups
+        private readonly array $sortableGroups,
     ) {}
 
     public function getLastPosition(object $entity): int
