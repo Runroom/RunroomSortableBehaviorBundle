@@ -20,6 +20,7 @@
         "php": "^8.1",
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/orm": "^2.16",
+        "doctrine/persistence": "^3.1",
         "symfony/config": "^5.4 || ^6.4 || ^7.1",
         "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.1",
         "symfony/http-foundation": "^5.4 || ^6.4 || ^7.1",

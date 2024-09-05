@@ -15,6 +15,7 @@ namespace Runroom\SortableBehaviorBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\ManagerRegistry;
 use Gedmo\Sortable\SortableListener;
 
 final class GedmoPositionHandler extends AbstractPositionHandler
@@ -25,20 +26,30 @@ final class GedmoPositionHandler extends AbstractPositionHandler
     private array $cacheLastPosition = [];
 
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly ManagerRegistry $registry,
         private readonly SortableListener $listener,
     ) {}
 
     public function getLastPosition(object $entity): int
     {
+        $manager = $this->registry->getManagerForClass($entity::class);
+
+        if (null === $manager) {
+            throw new \RuntimeException(\sprintf('Entity manager for class %s not found', $entity::class));
+        }
+
+        if (!$manager instanceof EntityManagerInterface) {
+            throw new \RuntimeException(\sprintf('Entity manager for class %s is not an instance of EntityManagerInterface', $entity::class));
+        }
+
         /**
          * @var ClassMetadata<object>
          */
-        $meta = $this->entityManager->getClassMetadata($entity::class);
+        $meta = $manager->getClassMetadata($entity::class);
         /**
          * @var array{ useObjectClass: string, position: string, groups?: class-string[] }
          */
-        $config = $this->listener->getConfiguration($this->entityManager, $meta->getName());
+        $config = $this->listener->getConfiguration($manager, $meta->getName());
 
         $groups = [];
         if (isset($config['groups'])) {
@@ -50,7 +61,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
         $hash = $this->getHash($config, $groups);
 
         if (!isset($this->cacheLastPosition[$hash])) {
-            $this->cacheLastPosition[$hash] = $this->queryLastPosition($config, $groups);
+            $this->cacheLastPosition[$hash] = $this->queryLastPosition($manager, $config, $groups);
         }
 
         return $this->cacheLastPosition[$hash];
@@ -62,12 +73,18 @@ final class GedmoPositionHandler extends AbstractPositionHandler
             $entity = $entity::class;
         }
 
-        $meta = $this->entityManager->getClassMetadata($entity);
+        $manager = $this->registry->getManagerForClass($entity);
+
+        if (null === $manager) {
+            throw new \RuntimeException(\sprintf('Entity manager for class %s not found', $entity));
+        }
+
+        $meta = $manager->getClassMetadata($entity);
 
         /**
          * @var array{position: string}
          */
-        $config = $this->listener->getConfiguration($this->entityManager, $meta->getName());
+        $config = $this->listener->getConfiguration($manager, $meta->getName());
 
         return $config['position'];
     }
@@ -103,9 +120,9 @@ final class GedmoPositionHandler extends AbstractPositionHandler
      * } $config
      * @param array<string, mixed> $groups
      */
-    private function queryLastPosition(array $config, array $groups): int
+    private function queryLastPosition(EntityManagerInterface $manager, array $config, array $groups): int
     {
-        $queryBuilder = $this->entityManager->createQueryBuilder();
+        $queryBuilder = $manager->createQueryBuilder();
         $queryBuilder->select(\sprintf('MAX(n.%s)', $config['position']))
             ->from($config['useObjectClass'], 'n');
 

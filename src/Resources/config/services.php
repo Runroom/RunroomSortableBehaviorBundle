@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
     $services->set('runroom.sortable_behavior.service.orm_position', ORMPositionHandler::class)
-        ->arg('$entityManager', service('doctrine.orm.entity_manager'))
+        ->arg('$registry', service('doctrine'))
         ->arg('$positionField', param('sortable.behavior.position.field'))
         ->arg('$sortableGroups', param('sortable.behavior.sortable_groups'))
         ->call('setPropertyAccessor', [service('property_accessor')]);

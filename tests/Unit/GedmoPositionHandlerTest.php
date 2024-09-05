@@ -17,8 +17,10 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Gedmo\Sortable\SortableListener;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler;
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\ChildSortableEntity;
@@ -27,16 +29,20 @@ use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 final class GedmoPositionHandlerTest extends TestCase
 {
     private EntityManagerInterface&MockObject $entityManager;
+    private ManagerRegistry&Stub $registry;
     private SortableListener&MockObject $listener;
     private GedmoPositionHandler $positionHandler;
 
     protected function setUp(): void
     {
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
+        $this->registry = $this->createStub(ManagerRegistry::class);
         $this->listener = $this->createMock(SortableListener::class);
 
+        $this->registry->method('getManagerForClass')->willReturn($this->entityManager);
+
         $this->positionHandler = new GedmoPositionHandler(
-            $this->entityManager,
+            $this->registry,
             $this->listener
         );
     }

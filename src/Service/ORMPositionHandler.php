@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Runroom\SortableBehaviorBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\MappingException;
 
 final class ORMPositionHandler extends AbstractPositionHandler
@@ -33,7 +34,7 @@ final class ORMPositionHandler extends AbstractPositionHandler
      * } $sortableGroups
      * */
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly ManagerRegistry $registry,
         private readonly array $positionField,
         private readonly array $sortableGroups,
     ) {}
@@ -61,38 +62,17 @@ final class ORMPositionHandler extends AbstractPositionHandler
         $cacheKey = $this->getCacheKeyForLastPosition($entity, $groups);
 
         if (!isset(self::$cacheLastPosition[$cacheKey])) {
-            $queryBuilder = $this->entityManager->createQueryBuilder()
-                ->select(\sprintf('MAX(t.%s) as last_position', $this->getPositionFieldByEntity($entityClass)))
-                ->from($entityClass, 't');
+            $manager = $this->registry->getManagerForClass($entityClass);
 
-            if (\count($groups) > 0) {
-                $index = 1;
-
-                foreach ($groups as $groupName) {
-                    $value = null;
-                    $callback = [$entity, 'get' . $groupName];
-
-                    if (\is_callable($callback)) {
-                        $value = \call_user_func($callback);
-                    }
-
-                    if (null !== $value) {
-                        $queryBuilder
-                            ->andWhere(\sprintf('t.%s = :group_%s', $groupName, $index))
-                            ->setParameter(\sprintf('group_%s', $index), $value);
-
-                        ++$index;
-                    }
-                }
+            if (null === $manager) {
+                throw new \RuntimeException(\sprintf('Entity manager for class %s not found', $entityClass));
             }
 
-            $query = $queryBuilder->getQuery();
-            $query->disableResultCache();
+            if (!$manager instanceof EntityManagerInterface) {
+                throw new \RuntimeException(\sprintf('Entity manager for class %s is not an instance of EntityManagerInterface', $entityClass));
+            }
 
-            $lastPosition = $query->getSingleScalarResult();
-            \assert(is_numeric($lastPosition));
-
-            self::$cacheLastPosition[$cacheKey] = (int) $lastPosition;
+            self::$cacheLastPosition[$cacheKey] = $this->queryLastPosition($manager, $entityClass, $entity, $groups);
         }
 
         return self::$cacheLastPosition[$cacheKey];
@@ -148,11 +128,56 @@ final class ORMPositionHandler extends AbstractPositionHandler
     private function getRealClass(object $object): string
     {
         $class = $object::class;
+        $manager = $this->registry->getManagerForClass($class);
+
+        if (null === $manager) {
+            return $class;
+        }
 
         try {
-            return $this->entityManager->getClassMetadata($class)->getName();
+            return $manager->getClassMetadata($class)->getName();
         } catch (MappingException) {
             return $class;
         }
+    }
+
+    /**
+     * @param class-string  $entityClass
+     * @param array<string> $groups
+     */
+    private function queryLastPosition(EntityManagerInterface $manager, string $entityClass, object $entity, array $groups): int
+    {
+        $queryBuilder = $manager->createQueryBuilder()
+            ->select(\sprintf('MAX(t.%s) as last_position', $this->getPositionFieldByEntity($entityClass)))
+            ->from($entityClass, 't');
+
+        if (\count($groups) > 0) {
+            $index = 1;
+
+            foreach ($groups as $groupName) {
+                $value = null;
+                $callback = [$entity, 'get' . $groupName];
+
+                if (\is_callable($callback)) {
+                    $value = \call_user_func($callback);
+                }
+
+                if (null !== $value) {
+                    $queryBuilder
+                        ->andWhere(\sprintf('t.%s = :group_%s', $groupName, $index))
+                        ->setParameter(\sprintf('group_%s', $index), $value);
+
+                    ++$index;
+                }
+            }
+        }
+
+        $query = $queryBuilder->getQuery();
+        $query->disableResultCache();
+
+        $lastPosition = $query->getSingleScalarResult();
+        \assert(is_numeric($lastPosition));
+
+        return (int) $lastPosition;
     }
 }

@@ -17,6 +17,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\MappingException;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -28,14 +29,18 @@ use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableGroup;
 final class ORMPositionHandlerTest extends TestCase
 {
     private EntityManagerInterface&Stub $entityManager;
+    private ManagerRegistry&Stub $registry;
     private ORMPositionHandler $positionHandler;
 
     protected function setUp(): void
     {
         $this->entityManager = $this->createStub(EntityManagerInterface::class);
+        $this->registry = $this->createStub(ManagerRegistry::class);
+
+        $this->registry->method('getManagerForClass')->willReturn($this->entityManager);
 
         $this->positionHandler = new ORMPositionHandler(
-            $this->entityManager,
+            $this->registry,
             ['entities' => [SortableEntity::class => 'position'], 'default' => 'place'],
             ['entities' => [SortableEntity::class => ['group', 'sortableGroup']]]
         );
