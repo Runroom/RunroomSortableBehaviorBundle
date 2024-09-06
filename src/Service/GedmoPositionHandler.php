@@ -47,14 +47,20 @@ final class GedmoPositionHandler extends AbstractPositionHandler
          */
         $meta = $manager->getClassMetadata($entity::class);
         /**
-         * @var array{ useObjectClass: string, position: string, groups?: class-string[] }
+         * @var array{ useObjectClass: class-string, position: string, groups?: class-string[] }
          */
         $config = $this->listener->getConfiguration($manager, $meta->getName());
 
         $groups = [];
         if (isset($config['groups'])) {
             foreach ($config['groups'] as $groupName) {
-                $groups[$groupName] = $meta->getReflectionProperty($groupName)->getValue($entity);
+                $reflectionProperty = $meta->getReflectionProperty($groupName);
+
+                if (null === $reflectionProperty) {
+                    continue;
+                }
+
+                $groups[$groupName] = $reflectionProperty->getValue($entity);
             }
         }
 
@@ -91,7 +97,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
 
     /**
      * @param array{
-     *     useObjectClass: string,
+     *     useObjectClass: class-string,
      *     position: string,
      *     groups?: class-string[]
      * } $config
@@ -114,7 +120,7 @@ final class GedmoPositionHandler extends AbstractPositionHandler
 
     /**
      * @param array{
-     *     useObjectClass: string,
+     *     useObjectClass: class-string,
      *     position: string,
      *     groups?: class-string[]
      * } $config

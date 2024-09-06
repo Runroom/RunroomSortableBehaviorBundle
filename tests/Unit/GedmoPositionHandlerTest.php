@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Gedmo\Sortable\SortableListener;
@@ -52,7 +52,7 @@ final class GedmoPositionHandlerTest extends TestCase
         $entity = new ChildSortableEntity();
         $meta = $this->createStub(ClassMetadata::class);
         $queryBuilder = $this->createMock(QueryBuilder::class);
-        $query = $this->createMock(AbstractQuery::class);
+        $query = $this->createMock(Query::class);
         $reflectionPropertyDate = $this->createMock(\ReflectionProperty::class);
         $reflectionPropertyObject = $this->createMock(\ReflectionProperty::class);
         $reflectionPropertyEmpty = $this->createStub(\ReflectionProperty::class);

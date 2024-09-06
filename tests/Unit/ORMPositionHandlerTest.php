@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\Unit;
 
-use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\MappingException;
@@ -50,7 +50,7 @@ final class ORMPositionHandlerTest extends TestCase
     {
         $entity = new ChildSortableEntity();
         $queryBuilder = $this->createMock(QueryBuilder::class);
-        $query = $this->createMock(AbstractQuery::class);
+        $query = $this->createMock(Query::class);
         $classMetadata = new ClassMetadata($entity::class);
 
         $entity->setSimpleGroup(2);
