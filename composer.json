@@ -18,6 +18,7 @@
     "homepage": "https://github.com/runroom/RunroomSortableBehaviorBundle",
     "require": {
         "php": "^8.1",
+        "doctrine/dbal": "^3.6",
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/orm": "^2.19 || ^3.2",
         "doctrine/persistence": "^3.1",
