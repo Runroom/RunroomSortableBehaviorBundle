@@ -28,7 +28,7 @@
         "symfony/http-kernel": "^5.4 || ^6.4 || ^7.1",
         "symfony/property-access": "^5.4 || ^6.4 || ^7.1",
         "symfony/translation": "^5.4 || ^6.4 || ^7.1",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.14"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^8.0",
