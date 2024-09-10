@@ -15,7 +15,6 @@ namespace Runroom\SortableBehaviorBundle\Tests\Functional;
 
 use Runroom\SortableBehaviorBundle\Tests\App\Entity\SortableEntity;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
@@ -49,18 +48,10 @@ final class AbstractSortableAdminTest extends WebTestCase
         $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity3->getId() . '/move/up');
         $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity4->getId() . '/move/top');
 
-        // @TODO: Remove else when dropping support for zenstruct/foundry 1
-        if (!class_exists(Proxy::class)) {
-            refresh($sortableEntity1);
-            refresh($sortableEntity2);
-            refresh($sortableEntity3);
-            refresh($sortableEntity4);
-        } else {
-            $sortableEntity1 = Proxy::createFromPersisted($sortableEntity1)->_refresh()->_real();
-            $sortableEntity2 = Proxy::createFromPersisted($sortableEntity2)->_refresh()->_real();
-            $sortableEntity3 = Proxy::createFromPersisted($sortableEntity3)->_refresh()->_real();
-            $sortableEntity4 = Proxy::createFromPersisted($sortableEntity4)->_refresh()->_real();
-        }
+        refresh($sortableEntity1);
+        refresh($sortableEntity2);
+        refresh($sortableEntity3);
+        refresh($sortableEntity4);
 
         static::assertSame(2, $sortableEntity1->getPosition());
         static::assertSame(3, $sortableEntity2->getPosition());
@@ -87,18 +78,10 @@ final class AbstractSortableAdminTest extends WebTestCase
 
         $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity1->getId() . '/move/3');
 
-        // @TODO: Remove else when dropping support for zenstruct/foundry 1
-        if (!class_exists(Proxy::class)) {
-            refresh($sortableEntity1);
-            refresh($sortableEntity2);
-            refresh($sortableEntity3);
-            refresh($sortableEntity4);
-        } else {
-            $sortableEntity1 = Proxy::createFromPersisted($sortableEntity1)->_refresh()->_real();
-            $sortableEntity2 = Proxy::createFromPersisted($sortableEntity2)->_refresh()->_real();
-            $sortableEntity3 = Proxy::createFromPersisted($sortableEntity3)->_refresh()->_real();
-            $sortableEntity4 = Proxy::createFromPersisted($sortableEntity4)->_refresh()->_real();
-        }
+        refresh($sortableEntity1);
+        refresh($sortableEntity2);
+        refresh($sortableEntity3);
+        refresh($sortableEntity4);
 
         static::assertSame(3, $sortableEntity1->getPosition());
         static::assertSame(0, $sortableEntity2->getPosition());

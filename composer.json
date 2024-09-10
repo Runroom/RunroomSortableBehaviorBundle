@@ -22,12 +22,12 @@
         "doctrine/doctrine-bundle": "^2.10",
         "doctrine/orm": "^2.19 || ^3.2",
         "doctrine/persistence": "^3.1",
-        "symfony/config": "^5.4 || ^6.4 || ^7.1",
-        "symfony/dependency-injection": "^5.4 || ^6.4 || ^7.1",
-        "symfony/http-foundation": "^5.4 || ^6.4 || ^7.1",
-        "symfony/http-kernel": "^5.4 || ^6.4 || ^7.1",
-        "symfony/property-access": "^5.4 || ^6.4 || ^7.1",
-        "symfony/translation": "^5.4 || ^6.4 || ^7.1",
+        "symfony/config": "^6.4 || ^7.1",
+        "symfony/dependency-injection": "^6.4 || ^7.1",
+        "symfony/http-foundation": "^6.4 || ^7.1",
+        "symfony/http-kernel": "^6.4 || ^7.1",
+        "symfony/property-access": "^6.4 || ^7.1",
+        "symfony/translation": "^6.4 || ^7.1",
         "twig/twig": "^3.14"
     },
     "require-dev": {
@@ -39,18 +39,18 @@
         "phpunit/phpunit": "^9.6",
         "psr/container": "^1.1 || ^2.0",
         "runroom-packages/testing": "^0.20",
-        "sonata-project/admin-bundle": "^4.20",
-        "sonata-project/doctrine-orm-admin-bundle": "^4.3",
-        "symfony/browser-kit": "^5.4 || ^6.4 || ^7.1",
-        "symfony/framework-bundle": "^5.4 || ^6.4 || ^7.1",
+        "sonata-project/admin-bundle": "^4.25",
+        "sonata-project/doctrine-orm-admin-bundle": "^4.13",
+        "symfony/browser-kit": "^6.4 || ^7.1",
+        "symfony/framework-bundle": "^6.4 || ^7.1",
         "symfony/phpunit-bridge": "^7.1",
-        "symfony/security-bundle": "^5.4 || ^6.4 || ^7.1",
-        "symfony/twig-bundle": "^5.4 || ^6.4 || ^7.1",
-        "zenstruck/foundry": "^1.38.2 || ^2.0"
+        "symfony/security-bundle": "^6.4 || ^7.1",
+        "symfony/twig-bundle": "^6.4 || ^7.1",
+        "zenstruck/foundry": "^2.0"
     },
     "conflict": {
         "gedmo/doctrine-extensions": "<3.11",
-        "sonata-project/admin-bundle": "<4.20"
+        "sonata-project/admin-bundle": "<4.25"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
