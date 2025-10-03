@@ -27,6 +27,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use Symfony\UX\StimulusBundle\StimulusBundle;
 use Zenstruck\Foundry\ZenstruckFoundryBundle;
 
 final class Kernel extends BaseKernel
@@ -45,21 +46,25 @@ final class Kernel extends BaseKernel
             new SonataDoctrineORMAdminBundle(),
             new TwigBundle(),
             new ZenstruckFoundryBundle(),
+            new StimulusBundle(),
 
             new RunroomSortableBehaviorBundle(),
         ];
     }
 
+    #[\Override]
     public function getCacheDir(): string
     {
         return $this->getBaseDir() . '/cache';
     }
 
+    #[\Override]
     public function getLogDir(): string
     {
         return $this->getBaseDir() . '/log';
     }
 
+    #[\Override]
     public function getProjectDir(): string
     {
         return __DIR__;

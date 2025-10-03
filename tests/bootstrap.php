@@ -24,6 +24,7 @@ if (class_exists(Deprecation::class)) {
     Deprecation::enableWithTriggerError();
 }
 
+// @phpstan-ignore-next-line
 $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'test', (bool) ($_SERVER['APP_DEBUG'] ?? false));
 
 (new Filesystem())->remove([$kernel->getCacheDir()]);

@@ -24,6 +24,7 @@ use Runroom\SortableBehaviorBundle\Twig\ObjectPositionExtension;
 
 final class RunroomSortableBehaviorExtensionTest extends AbstractExtensionTestCase
 {
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

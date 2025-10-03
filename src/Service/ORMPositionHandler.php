@@ -142,8 +142,8 @@ final class ORMPositionHandler extends AbstractPositionHandler
     }
 
     /**
-     * @param class-string  $entityClass
-     * @param array<string> $groups
+     * @param class-string $entityClass
+     * @param string[]     $groups
      */
     private function queryLastPosition(EntityManagerInterface $manager, string $entityClass, object $entity, array $groups): int
     {

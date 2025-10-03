@@ -13,4 +13,7 @@ declare(strict_types=1);
 
 namespace Runroom\SortableBehaviorBundle\Tests\App\Entity;
 
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 class ChildSortableEntity extends SortableEntity {}

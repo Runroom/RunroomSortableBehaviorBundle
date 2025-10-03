@@ -43,10 +43,10 @@ final class AbstractSortableAdminTest extends WebTestCase
         static::assertSame(2, $sortableEntity3->getPosition());
         static::assertSame(3, $sortableEntity4->getPosition());
 
-        $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity1->getId() . '/move/down');
-        $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity2->getId() . '/move/bottom');
-        $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity3->getId() . '/move/up');
-        $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity4->getId() . '/move/top');
+        $client->request('GET', '/tests/app/sortableentity/' . ($sortableEntity1->getId() ?? '') . '/move/down');
+        $client->request('GET', '/tests/app/sortableentity/' . ($sortableEntity2->getId() ?? '') . '/move/bottom');
+        $client->request('GET', '/tests/app/sortableentity/' . ($sortableEntity3->getId() ?? '') . '/move/up');
+        $client->request('GET', '/tests/app/sortableentity/' . ($sortableEntity4->getId() ?? '') . '/move/top');
 
         refresh($sortableEntity1);
         refresh($sortableEntity2);
@@ -76,7 +76,7 @@ final class AbstractSortableAdminTest extends WebTestCase
         static::assertSame(2, $sortableEntity3->getPosition());
         static::assertSame(3, $sortableEntity4->getPosition());
 
-        $client->request('GET', '/tests/app/sortableentity/' . $sortableEntity1->getId() . '/move/3');
+        $client->request('GET', '/tests/app/sortableentity/' . ($sortableEntity1->getId() ?? '') . '/move/3');
 
         refresh($sortableEntity1);
         refresh($sortableEntity2);

@@ -36,7 +36,7 @@ final class GedmoPositionHandlerTest extends TestCase
     protected function setUp(): void
     {
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
-        $this->registry = $this->createStub(ManagerRegistry::class);
+        $this->registry = static::createStub(ManagerRegistry::class);
         $this->listener = $this->createMock(SortableListener::class);
 
         $this->registry->method('getManagerForClass')->willReturn($this->entityManager);
@@ -50,12 +50,12 @@ final class GedmoPositionHandlerTest extends TestCase
     public function testItGetsLastPosition(): void
     {
         $entity = new ChildSortableEntity();
-        $meta = $this->createStub(ClassMetadata::class);
+        $meta = static::createStub(ClassMetadata::class);
         $queryBuilder = $this->createMock(QueryBuilder::class);
         $query = $this->createMock(Query::class);
         $reflectionPropertyDate = $this->createMock(\ReflectionProperty::class);
         $reflectionPropertyObject = $this->createMock(\ReflectionProperty::class);
-        $reflectionPropertyEmpty = $this->createStub(\ReflectionProperty::class);
+        $reflectionPropertyEmpty = static::createStub(\ReflectionProperty::class);
 
         $meta->method('getName')->willReturn('SortableEntity');
         $meta->method('getReflectionProperty')->willReturnMap([
@@ -87,7 +87,7 @@ final class GedmoPositionHandlerTest extends TestCase
 
     public function testItGetsPositionFieldByEntity(): void
     {
-        $meta = $this->createStub(ClassMetadata::class);
+        $meta = static::createStub(ClassMetadata::class);
 
         $meta->method('getName')->willReturn('SortableEntity');
         $this->entityManager->method('getClassMetadata')->with(SortableEntity::class)->willReturn($meta);

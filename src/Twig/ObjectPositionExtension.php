@@ -21,6 +21,7 @@ final class ObjectPositionExtension extends AbstractExtension
 {
     public function __construct(private readonly PositionHandlerInterface $positionHandler) {}
 
+    #[\Override]
     public function getFunctions(): array
     {
         return [

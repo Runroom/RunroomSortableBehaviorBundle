@@ -18,6 +18,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Runroom\SortableBehaviorBundle\Behaviors\Sortable;
 
+/**
+ * @psalm-suppress ClassMustBeFinal
+ */
 #[ORM\Entity]
 class SortableEntity extends AbstractSortableEntity
 {

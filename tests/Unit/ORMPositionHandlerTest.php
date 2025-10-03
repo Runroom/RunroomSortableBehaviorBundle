@@ -34,8 +34,8 @@ final class ORMPositionHandlerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->entityManager = $this->createStub(EntityManagerInterface::class);
-        $this->registry = $this->createStub(ManagerRegistry::class);
+        $this->entityManager = static::createStub(EntityManagerInterface::class);
+        $this->registry = static::createStub(ManagerRegistry::class);
 
         $this->registry->method('getManagerForClass')->willReturn($this->entityManager);
 

@@ -125,7 +125,7 @@ final class MoveActionTest extends TestCase
 
     private function configureContainer(): void
     {
-        $session = $this->createStub(Session::class);
+        $session = static::createStub(Session::class);
 
         $flashBag = new FlashBag();
         $requestStack = new RequestStack();
